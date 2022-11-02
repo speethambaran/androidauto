@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+
+    <color name="colorPrimary">#BBE491</color>
+    <color name="colorPrimaryDark">#C62828</color>
+    <color name="colorAccent">#D32F2F</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorGrey">#7f7f7f</color>
+    <color name="colorAlphaRed">#66FF0000</color>
+
+    <color name="colorBlack">#000</color>
+    <color name="colorLightRed">#DA5F6A</color>
+    <color name="colorBackground">#dddddd</color>
+    <color name="colorGreenDark">#388E3C</color>
+    <color name="colorBlue">#1D63A8</color>
+    <color name="colorLoyaltyCard">#eeeeee</color>
+    <color name="colorGreen">#27E92F</color>
+    <color name="colorRed">#D32F2F</color>
+    <color name="colorDisabled">#e6e6e6</color>
+
+    <color name="colorLightWhite">#f5f5f5</color>
+    <color name="ash_e6">#E6E6E6</color>
+    <color name="ash84">#848484</color>
+    <color name="orange">#f57d20</color>
+    <color name="brown">#DD9A36</color>
+    <color name="LBlue">#2C9ACC</color>
+
+    <color name="lightBlack">#60000000</color>
+
+
+    <string-array name="randomColors">
+        <item>#5E97F6</item>
+        <item>#9CCC65</item>
+        <item>#FF8A65</item>
+        <item>#9E9E9E</item>
+        <item>#9FA8DA</item>
+        <item>#90A4AE</item>
+        <item>#AED581</item>
+        <item>#F6BF26</item>
+        <item>#FFA726</item>
+        <item>#4DD0E1</item>
+        <item>#BA68C8</item>
+        <item>#A1887F</item>
+    </string-array>
+</resources>

@@ -1,0 +1,154 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    xmlns:tools="http://schemas.android.com/tools"
+4    package="com.infolitz.musicplayer.shared" >
+5
+6    <uses-sdk
+7        android:minSdkVersion="29"
+7-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml
+8        android:targetSdkVersion="32" />
+8-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml
+9
+10    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+10-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:5:5-79
+10-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:5:22-76
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:6:5-67
+11-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:6:22-64
+12    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+12-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:5:5-79
+12-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:5:22-76
+13    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+13-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:8:5-82
+13-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:8:22-79
+14    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+14-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:9:5-80
+14-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:9:22-77
+15    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+15-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:10:5-71
+15-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:10:22-68
+16    <uses-permission android:name="android.permission.USB_PERMISSION" />
+16-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:11:5-73
+16-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:11:22-70
+17    <uses-permission
+17-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:12:5-14:40
+18        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+18-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:13:9-65
+19        tools:ignore="ScopedStorage" />
+19-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:14:9-37
+20
+21    <uses-feature android:name="android.hardware.bluetooth" />
+21-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:16:5-63
+21-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:16:19-60
+22
+23    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+23-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:18:5-76
+23-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:18:22-73
+24    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+24-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:19:5-73
+24-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:19:22-70
+25    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+25-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:20:5-78
+25-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:20:22-75
+26    <uses-permission
+26-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:21:5-23:38
+27        android:name="android.permission.BLUETOOTH"
+27-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:22:9-52
+28        android:maxSdkVersion="32" />
+28-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:23:9-35
+29    <uses-permission
+29-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:24:5-26:38
+30        android:name="android.permission.BLUETOOTH_ADMIN"
+30-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:25:9-58
+31        android:maxSdkVersion="32" />
+31-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:26:9-35
+32    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+32-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:20:5-78
+32-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:20:22-75
+33    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+33-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:28:5-79
+33-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:28:22-76
+34    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+34-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:29:5-81
+34-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:29:22-78
+35    <uses-permission android:name="android.permission.WAKE_LOCK" />
+35-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:30:5-68
+35-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:30:22-65
+36    <uses-permission android:name="android.permission.USB_PERMISSION" />
+36-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:11:5-73
+36-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:11:22-70
+37    <uses-permission
+37-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:32:5-34:47
+38        android:name="android.permission.LOCATION_HARDWARE"
+38-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:33:9-60
+39        tools:ignore="ProtectedPermissions" />
+39-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:34:9-44
+40    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+40-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:35:5-85
+40-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:35:22-82
+41    <uses-permission
+41-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:36:5-38:47
+42        android:name="android.permission.CONTROL_LOCATION_UPDATES"
+42-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:37:9-67
+43        tools:ignore="ProtectedPermissions" />
+43-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:38:9-44
+44    <uses-permission
+44-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:39:5-41:47
+45        android:name="android.permission.BLUETOOTH_PRIVILEGED"
+45-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:40:9-63
+46        tools:ignore="ProtectedPermissions" />
+46-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:41:9-44
+47
+48    <permission
+48-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:43:5-45:37
+49        android:name="android.permission.BLUETOOTH"
+49-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:44:9-52
+50        android:label="BLUETOOTH" />
+50-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:45:9-34
+51    <permission android:name="android.permission.BLUETOOTH_ADMIN" />
+51-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:46:5-69
+51-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:46:17-66
+52    <permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+52-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:47:5-74
+52-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:47:17-71
+53    <permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+53-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:48:5-76
+53-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:48:17-73
+54    <permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+54-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:49:5-75
+54-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:49:17-72
+55
+56    <uses-feature android:name="android.hardware.usb.accessory" />
+56-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:50:5-67
+56-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:50:19-64
+57
+58    <permission android:name="android.permission.USB_PERMISSION" />
+58-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:51:5-68
+58-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:51:17-65
+59
+60    <application android:appCategory="audio" >
+60-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:55:5-69:19
+60-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:55:18-45
+61        <meta-data
+61-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:57:9-59:59
+62            android:name="com.google.android.gms.car.application"
+62-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:58:13-66
+63            android:resource="@xml/automotive_app_desc" />
+63-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:59:13-56
+64
+65        <service
+65-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:61:9-67:19
+66            android:name="com.infolitz.musicplayer.shared.MyMusicService"
+66-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:62:13-74
+67            android:exported="true" >
+67-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:63:13-36
+68            <intent-filter>
+68-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:64:13-66:29
+69                <action android:name="android.media.browse.MediaBrowserService" />
+69-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:65:17-83
+69-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:65:25-80
+70            </intent-filter>
+71        </service>
+72    </application>
+73
+74</manifest>
