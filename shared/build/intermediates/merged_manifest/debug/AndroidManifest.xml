@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.infolitz.newcar.shared" >
+
+    <uses-sdk
+        android:minSdkVersion="29"
+        android:targetSdkVersion="32" />
+
+    <!-- Before Android 12 (but still needed location, even if not requested) -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH"
+        android:maxSdkVersion="30" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_ADMIN"
+        android:maxSdkVersion="30" />
+    <!-- From Android 12 -->
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_SCAN"
+        android:usesPermissionFlags="neverForLocation" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="com.google.android.things.permission.USE_PERIPHERAL_IO" />
+    <uses-permission android:name="com.google.android.things.permission.MANAGE_INPUT_DRIVERS" />
+
+    <application android:appCategory="audio" >
+        <activity
+            android:name="com.infolitz.newcar.shared.BluetoothActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.infolitz.newcar.shared.SpeedometerActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.infolitz.newcar.shared.CommunicateWithC"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.gms.car.application"
+            android:resource="@xml/automotive_app_desc" />
+        <!--
+ Main music service, provides media browsing and media playback services to
+         consumers through MediaBrowserService and MediaSession. Consumers connect to it through
+         MediaBrowser (for browsing) and MediaController (for playback control)
+        -->
+        <service
+            android:name="com.infolitz.newcar.shared.MyMusicService"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.media.browse.MediaBrowserService" />
+            </intent-filter>
+        </service>
+    </application>
+
+</manifest>

@@ -1,0 +1,17 @@
+R_DEF: Internal format may change without notice
+local
+drawable speedometer_image_indicator
+id action_send
+id btn2
+id btnn
+id devicesListView
+id discover
+id main_layout
+id speedometer
+id speedometer_recyclerView
+id text_c
+layout activity_bluetooth
+layout activity_main
+layout activity_speedometer
+layout card_view_speedometer
+xml automotive_app_desc

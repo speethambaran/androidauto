@@ -1,0 +1,95 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.infolitz.newcar.shared" >
+4
+5    <uses-sdk
+6        android:minSdkVersion="29"
+6-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml
+7        android:targetSdkVersion="32" />
+7-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml
+8
+9    <!-- Before Android 12 (but still needed location, even if not requested) -->
+10    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+10-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:6:5-81
+10-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:6:22-78
+11    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+11-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:7:5-79
+11-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:7:22-76
+12    <uses-permission
+12-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:8:5-95
+13        android:name="android.permission.BLUETOOTH"
+13-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:8:22-65
+14        android:maxSdkVersion="30" />
+14-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:8:66-92
+15    <uses-permission
+15-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:9:5-101
+16        android:name="android.permission.BLUETOOTH_ADMIN"
+16-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:9:22-71
+17        android:maxSdkVersion="30" />
+17-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:9:72-98
+18    <!-- From Android 12 -->
+19    <uses-permission
+19-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:11:5-120
+20        android:name="android.permission.BLUETOOTH_SCAN"
+20-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:11:22-70
+21        android:usesPermissionFlags="neverForLocation" />
+21-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:11:71-117
+22    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+22-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:12:5-76
+22-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:12:22-73
+23    <uses-permission android:name="com.google.android.things.permission.USE_PERIPHERAL_IO" />
+23-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:14:5-93
+23-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:14:22-91
+24    <uses-permission android:name="com.google.android.things.permission.MANAGE_INPUT_DRIVERS" />
+24-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:15:5-97
+24-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:15:22-94
+25
+26    <application android:appCategory="audio" >
+26-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:18:5-44:19
+26-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:18:18-45
+27        <activity
+27-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:19:9-21:40
+28            android:name="com.infolitz.newcar.shared.BluetoothActivity"
+28-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:20:13-46
+29            android:exported="false" />
+29-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:21:13-37
+30        <activity
+30-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:22:9-24:40
+31            android:name="com.infolitz.newcar.shared.SpeedometerActivity"
+31-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:23:13-48
+32            android:exported="false" />
+32-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:24:13-37
+33        <activity
+33-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:25:9-27:40
+34            android:name="com.infolitz.newcar.shared.CommunicateWithC"
+34-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:26:13-45
+35            android:exported="false" />
+35-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:27:13-37
+36
+37        <meta-data
+37-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:29:9-31:59
+38            android:name="com.google.android.gms.car.application"
+38-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:30:13-66
+39            android:resource="@xml/automotive_app_desc" />
+39-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:31:13-56
+40        <!--
+41 Main music service, provides media browsing and media playback services to
+42         consumers through MediaBrowserService and MediaSession. Consumers connect to it through
+43         MediaBrowser (for browsing) and MediaController (for playback control)
+44        -->
+45        <service
+45-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:37:9-43:19
+46            android:name="com.infolitz.newcar.shared.MyMusicService"
+46-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:38:13-43
+47            android:exported="true" >
+47-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:39:13-36
+48            <intent-filter>
+48-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:40:13-42:29
+49                <action android:name="android.media.browse.MediaBrowserService" />
+49-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:41:17-83
+49-->D:\Android Infolitz_ NP\Android Automotive Required files\Projects\new car java\shared\src\main\AndroidManifest.xml:41:25-80
+50            </intent-filter>
+51        </service>
+52    </application>
+53
+54</manifest>
