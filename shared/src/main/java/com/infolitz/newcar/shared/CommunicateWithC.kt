@@ -10,11 +10,13 @@ class CommunicateWithC : AppCompatActivity() {
 //        setContentView(R.layout.activity_speedometer)
 //    }
 
-    external fun Method(): String
+    //    external fun MyMethod(): String
+    external fun useWiringLib(): String
 
     companion object {
         init {
-            System.loadLibrary("cpp_code")
+//            System.loadLibrary("wiringPiLib")
+            System.loadLibrary("srkMyLib")
         }
     }
 }

@@ -17,5 +17,4 @@ include ':mobile'
 include ':automotive'
 include ':shared'
 include ':speedviewlib'
-include ':WiringPi-master'
 

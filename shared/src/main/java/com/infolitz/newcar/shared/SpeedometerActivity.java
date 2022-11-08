@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.github.anastr.speedviewlib.Speedometer;
 import com.github.anastr.speedviewlib.components.indicators.ImageIndicator;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class SpeedometerActivity extends AppCompatActivity {
 /*
     private Handler mInputHandler;
     private HandlerThread mInputThread;*/
-    CommunicateWithC communicateWithC = new CommunicateWithC();
+    CommunicateWithC communicateWithC = new CommunicateWithC();//for kotlin communication with cpp_code
 
     //....close uart
     @Override
@@ -49,9 +50,11 @@ public class SpeedometerActivity extends AppCompatActivity {
 
         TextView textView=findViewById(R.id.text_c);
 //        communicateWithC= new CommunicateWithC();
-        String abcd= communicateWithC.Method();
-        Log.e("jnekj",abcd);
+       /* String abcd= communicateWithC.MyMethod();//for kotlin communication with cpp_code
+        Log.e("from kotlin",abcd);
 //        textView.setText(communicateWithC.Method());
+        Log.e("from java testingg",abcd);
+        textView.setText(abcd);*/
 
 
 /*
@@ -156,6 +159,11 @@ public class SpeedometerActivity extends AppCompatActivity {
         System.loadLibrary("cpp_code");
         return ;
     }*/
+    /*static { //for java communication with cpp_code
+        System.loadLibrary("cpp_code");
+        System.loadLibrary("test_code");
+   }
+   public native String ForTestingg();*///for java communication with cpp_code
     //.... for uart end
 }
 

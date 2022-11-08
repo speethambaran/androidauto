@@ -1,19 +1,36 @@
 
 cmake_minimum_required(VERSION 3.4.1)
 
-add_library(
-        cpp_code
+project(“mycarspeed”)
 
+# wiringPiLib library
+include_directories(
+        jni
+)
+
+add_library (wiringPiLib SHARED IMPORTED)
+set_target_properties (wiringPiLib
+        PROPERTIES IMPORTED_LOCATION
+        "wiringPiLib/${ANDROID_ABI}/libwiringPi.so")
+
+#\wiringPiLib\arm64-v8a
+
+add_library( # Sets the name of the library.
+        srkMyLib
+        # Sets the library as a shared library.
         SHARED
+        #        src/main/jni/use_my_wiring_Lib.c
+        jni/use_my_wiring_Lib.cpp
+        )
 
-        cpp_code.cpp)
 
 find_library(
-        cpp_code
+        log-lib
 
         log)
 
 target_link_libraries(
-        cpp_code
+        srkMyLib
+        wiringPiLib
 
         ${log-lib})
