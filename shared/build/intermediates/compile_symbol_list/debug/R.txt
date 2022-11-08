@@ -98,6 +98,8 @@ int layout single_musiclistlayout 0x0
 int layout toolbar 0x0
 int string app_name 0x0
 int string choose_file 0x0
+int string directory 0x0
+int string file 0x0
 int string hello_blank_fragment 0x0
 int style AppTheme 0x0
 int style AppTheme_CustomTheme 0x0

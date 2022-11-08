@@ -12,7 +12,7 @@
         <item>#4DD0E1</item>
         <item>#BA68C8</item>
         <item>#A1887F</item>
-    </string-array></file><file path="D:\Music Auto_ fully automotive\Music Auto\shared\src\main\res\values\strings.xml" qualifiers=""><string name="app_name">Music Player</string><string name="choose_file">Choose a file</string><string name="hello_blank_fragment">Hello blank fragment</string></file><file path="D:\Music Auto_ fully automotive\Music Auto\shared\src\main\res\values\styles.xml" qualifiers=""><style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    </string-array></file><file path="D:\Music Auto_ fully automotive\Music Auto\shared\src\main\res\values\strings.xml" qualifiers=""><string name="app_name">Music Player</string><string name="choose_file">Choose a file</string><string name="hello_blank_fragment">Hello blank fragment</string><string name="directory">Directory</string><string name="file">File</string></file><file path="D:\Music Auto_ fully automotive\Music Auto\shared\src\main\res\values\styles.xml" qualifiers=""><style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>

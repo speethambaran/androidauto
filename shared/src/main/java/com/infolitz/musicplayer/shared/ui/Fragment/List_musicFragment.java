@@ -1,7 +1,5 @@
 package com.infolitz.musicplayer.shared.ui.Fragment;
 
-import static android.content.ContentValues.TAG;
-
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -13,11 +11,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.hardware.usb.UsbAccessory;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
 import android.hardware.usb.UsbManager;
+import android.hardware.usb.UsbRequest;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,6 +33,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -45,10 +46,13 @@ import com.infolitz.musicplayer.shared.databinding.FragmentListMusicBinding;
 import com.infolitz.musicplayer.shared.model.MusicModel;
 import com.infolitz.musicplayer.shared.utils.RecyclerTouchListner;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+
+import me.jahnen.libaums.core.UsbMassStorageDevice;
 
 
 public class List_musicFragment extends Fragment {
@@ -58,24 +62,27 @@ public class List_musicFragment extends Fragment {
     List<MusicModel> musicModelList = new ArrayList<>();
     ActivityResultLauncher<String> storagePermissionLauncher;
     final String permission = Manifest.permission.READ_EXTERNAL_STORAGE;
+
+
     ExoPlayer player;
     ActivityResultLauncher<String> recordAudioPermissionLauncher;
     final String recordAudioPermission = Manifest.permission.RECORD_AUDIO;
     String name;
-
+    SetUpDevice setUpDevice;
     private UsbManager usbManager;
-    private UsbDevice clef;
+    private UsbDevice usbDevice;
+    UsbAccessory accessory;
     PendingIntent permissionIntent;
 
     UsbDeviceConnection connection = null;
+    UsbMassStorageDevice device;
 
-
-    private Byte[] bytes;
+    private final byte[] bytes = new byte[64];
     private static int TIMEOUT = 0;
     private boolean forceClaim = true;
 
-    private static final String ACTION_USB_PERMISSION =
-            "com.android.example.USB_PERMISSION";
+
+    private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -91,24 +98,30 @@ public class List_musicFragment extends Fragment {
     }
 
     private void init() {
+
         binding.rlParentMusic.setVisibility(View.GONE);
         binding.rlRecycler.setVisibility(View.VISIBLE);
         binding.rlPlayed.setVisibility(View.GONE);
 
+        usbManager = (UsbManager) getActivity().getSystemService(Context.USB_SERVICE);
+
+        permissionIntent = PendingIntent.getBroadcast(getActivity(), 0, new Intent(ACTION_USB_PERMISSION), 0);
+        IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
+        getActivity().registerReceiver(usbReceiver, filter);
         usbManager();
 
-        storagePermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), granted ->
-        {
+
+        storagePermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), granted -> {
             if (granted) {
                 fetchSongs();
             } else {
                 UserResponse();
             }
+            checkSelfPermission();
         });
         storagePermissionLauncher.launch(permission);
 
-        recordAudioPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), granted ->
-        {
+        recordAudioPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), granted -> {
         });
 
         player = new ExoPlayer.Builder(getActivity()).build();
@@ -206,16 +219,6 @@ public class List_musicFragment extends Fragment {
     }
 
 
-/*    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (player.isPlaying()) {
-            player.stop();
-        } else {
-            player.release();
-        }
-    }*/
-
     private void fetchSongs() {
         List<MusicModel> musicModels = new ArrayList<>();
         Uri mediaStoreUri;
@@ -224,14 +227,10 @@ public class List_musicFragment extends Fragment {
         } else {
             mediaStoreUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         }
-        String[] projection = new String[]{
-                MediaStore.Audio.Media._ID,
-                MediaStore.Audio.Media.DISPLAY_NAME,
-                MediaStore.Audio.Media.DURATION,
-                MediaStore.Audio.Media.SIZE,
-                MediaStore.Audio.Media.ALBUM_ID,
-        };
-        String sortOrder = MediaStore.Audio.Media.DATE_ADDED + "DESC";
+
+
+        String[] projection = new String[]{MediaStore.Audio.Media._ID, MediaStore.Audio.Media.DISPLAY_NAME, MediaStore.Audio.Media.DURATION, MediaStore.Audio.Media.SIZE, MediaStore.Audio.Media.ALBUM_ID,};
+        String sortOrder = MediaStore.Audio.Media.DATE_ADDED;
         try (Cursor cursor = getActivity().getContentResolver().query(mediaStoreUri, projection, null, null, null)) {
             int idColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID);
             int nameColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME);
@@ -281,23 +280,18 @@ public class List_musicFragment extends Fragment {
             fetchSongs();
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (shouldShowRequestPermissionRationale(permission)) {
-                new AlertDialog.Builder(getActivity())
-                        .setTitle("Requesting permission")
-                        .setMessage("Allow us to fetch songs on your device")
-                        .setPositiveButton("allow", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                storagePermissionLauncher.launch(permission);
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Toast.makeText(getActivity(), "permission denied", Toast.LENGTH_SHORT).show();
-                                dialogInterface.dismiss();
-                            }
-                        })
-                        .show();
+                new AlertDialog.Builder(getActivity()).setTitle("Requesting permission").setMessage("Allow us to fetch songs on your device").setPositiveButton("allow", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        storagePermissionLauncher.launch(permission);
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(getActivity(), "permission denied", Toast.LENGTH_SHORT).show();
+                        dialogInterface.dismiss();
+                    }
+                }).show();
             }
         } else {
             Toast.makeText(getActivity(), "Cancelled..", Toast.LENGTH_SHORT).show();
@@ -307,20 +301,14 @@ public class List_musicFragment extends Fragment {
     private List<MediaItem> getMediaItems() {
         List<MediaItem> mediaItems = new ArrayList<>();
         for (MusicModel musicModel : musicModelList) {
-            MediaItem mediaItem = new MediaItem.Builder()
-                    .setUri(musicModel.getUri())
-                    .setMediaMetadata(getMetaData(musicModel))
-                    .build();
+            MediaItem mediaItem = new MediaItem.Builder().setUri(musicModel.getUri()).setMediaMetadata(getMetaData(musicModel)).build();
             mediaItems.add(mediaItem);
         }
         return mediaItems;
     }
 
     private MediaMetadata getMetaData(MusicModel musicModel) {
-        return new MediaMetadata.Builder()
-                .setTitle(musicModel.getTitle())
-                .setArtworkUri(musicModel.getArtworkUri())
-                .build();
+        return new MediaMetadata.Builder().setTitle(musicModel.getTitle()).setArtworkUri(musicModel.getArtworkUri()).build();
     }
 
 
@@ -340,57 +328,143 @@ public class List_musicFragment extends Fragment {
     }
 
     private void usbManager() {
-        usbManager = (UsbManager) getActivity().getSystemService(Context.USB_SERVICE);
-        clef = null;
 
         if (usbManager != null) {
-            HashMap<String, UsbDevice> deviceList = usbManager.getDeviceList();
-            if (deviceList != null) {
-                Toast.makeText(getActivity(), "Usb Detected", Toast.LENGTH_SHORT).show();
-                Iterator<UsbDevice> deviceIterator = deviceList.values().iterator();
+            HashMap<String, UsbDevice> hostDevice = usbManager.getDeviceList();
+            UsbDevice device = null;
+            if (hostDevice != null) {
+                Iterator<UsbDevice> deviceIterator = hostDevice.values().iterator();
                 while (deviceIterator.hasNext()) {
-                    clef = deviceIterator.next();
-                    permissionIntent = PendingIntent.getBroadcast(getActivity(), 0, new Intent(ACTION_USB_PERMISSION), 0);
-                    IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
-                    getActivity().registerReceiver(usbReceiver, filter);
+                    device = deviceIterator.next();
+                }
+                Log.d("CDEVICE", "Host FOUND " + hostDevice);
+                usbManager.requestPermission(device, permissionIntent);
+                boolean hasPermision = usbManager.hasPermission(device);
+                if (hasPermision) {
+                    UsbDeviceConnection connection = usbManager.openDevice(device);
+                    if (connection == null) {
+                        return;
+                    } else {
+                        Log.d("CDEVICE", "Got connection ");
+                    }
+                }
+            } else {
+                Log.d("CDEVICE", "Host EMPTY");
+            }
+        }
+
+
+/*        if (clef != null) {
+            File directory = new File("/dev/bus/usb/001/"); //  /storage/UsbDriveA/    ....  /dev/bus/usb/001/006/
+            Log.e("directory", String.valueOf(directory));
+            if (directory != null) {
+
+                Log.e("got into directory", String.valueOf(directory.canRead()));
+
+                //.......
+                if (directory.canRead()) {
+
+                    File dir = new File("/dev/bus/usb/001/");
+                    if (dir.exists() && dir.isDirectory()) {
+                        // do something here
+                        Log.e("g...", dir.exists() + " and " + dir.isDirectory());
+//                        Uri.parse(new File("/dev/bus/usb/001/").toString());
+                    }
+                }
+
+                //..............
+            }
+        }*/
+    }
+
+
+    final BroadcastReceiver usbReceiver = new BroadcastReceiver() {
+
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            Log.d("CDEVICE", "Action is : " + action);
+            if (ACTION_USB_PERMISSION.equals(action)) {
+
+                usbDevice = (UsbDevice) intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+                if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
+                    if (usbDevice != null) {
+                        //call method to set up accessory communication
+                        Log.d("CDEVICE", "permission Accepted for device " + usbDevice.getManufacturerName());
+                        connectUSB(usbDevice);
+
+                    }
+
+                }
+            } else if (UsbManager.ACTION_USB_DEVICE_ATTACHED == action) {
+                usbDevice = (UsbDevice) intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+                Log.d("CDEVICE", "USB device attached" + usbDevice.getManufacturerName());
+                if (usbDevice != null) {
 
                 }
             }
+        }
+
+
+    };
+
+
+    private void connectUSB(UsbDevice device) {
+        Log.d("CDEVICE", "Connect USb  : " + device.getManufacturerName());
+        UsbInterface intf = device.getInterface(0);
+        UsbEndpoint endpoint = intf.getEndpoint(0);
+
+        int packetSize = endpoint.getMaxPacketSize();
+        Log.d("CDEVICE", "Packet size  : " + packetSize);
+
+
+        ByteBuffer buffer = ByteBuffer.allocate(packetSize);
+        UsbDeviceConnection connection = usbManager.openDevice(device);
+        UsbRequest usbRequest = new UsbRequest();
+
+        usbRequest.initialize(connection, endpoint);
+        usbRequest.queue(buffer, 1);
+
+        if (connection.requestWait() == usbRequest) {
+
+            UsbRequest inRequest = new UsbRequest();
+            inRequest.initialize(connection, endpoint);
+
+            if (inRequest.queue(buffer, packetSize) == true) {
+
+                connection.requestWait();
+
+                // get response data
+                byte[] data = buffer.array();
+                Log.d("CDEVICE", " byte Packet size  : " + data.toString());
+            }
+
+//            UsbDeviceConnection connection = usbManager.openDevice(device);
+
+//        connection.claimInterface(intf, forceClaim);
+//        connection.bulkTransfer(endpoint, bytes, bytes.length, TIMEOUT); //do in another thread
+
         }
     }
 
 
-    private final BroadcastReceiver usbReceiver = new BroadcastReceiver() {
+    private Boolean checkSelfPermission() {
 
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (ACTION_USB_PERMISSION.equals(action)) {
-                synchronized (this) {
-                    UsbDevice device = (UsbDevice) intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
-
-                    if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
-                        if (device != null) {
-                            //call method to set up device communication
-                            connectUSB();
-
-                        }
-                    } else {
-                        Log.d(TAG, "permission denied for device " + device);
-                        usbManager.requestPermission(clef, permissionIntent);
-                    }
-                }
-            }
+        List<String> permissionsList = new ArrayList<>();
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            permissionsList.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
         }
 
-        private void connectUSB() {
-            UsbInterface intf = clef.getInterface(0);
-            UsbEndpoint endpoint = intf.getEndpoint(0);
-            UsbDeviceConnection connection = usbManager.openDevice(clef);
-            connection.claimInterface(intf, forceClaim);
-//            connection.bulkTransfer(endpoint, bytes, bytes.length, TIMEOUT); //do in another thread
-
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.MANAGE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            permissionsList.add(Manifest.permission.MANAGE_EXTERNAL_STORAGE);
         }
-    };
+
+        if (permissionsList.size() > 0) {
+            ActivityCompat.requestPermissions(getActivity(), permissionsList.toArray(new String[permissionsList.size()]), 1);
+        }
+
+
+        return true;
+    }
 
 
 }

@@ -1,5 +1,8 @@
 plugins {
     id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+
+
 }
 android {
     compileSdkVersion 32
@@ -27,6 +30,8 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-location:19.0.1'
     implementation 'com.google.android.exoplayer:exoplayer:2.18.1'
+
+    implementation 'me.jahnen.libaums:core:0.9.1'
 
 
 

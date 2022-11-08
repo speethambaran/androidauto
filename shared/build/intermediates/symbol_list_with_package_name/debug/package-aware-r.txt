@@ -99,6 +99,8 @@ layout single_musiclistlayout
 layout toolbar
 string app_name
 string choose_file
+string directory
+string file
 string hello_blank_fragment
 style AppTheme
 style AppTheme_CustomTheme

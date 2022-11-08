@@ -9,6 +9,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.USB_PERMISSION" />
+
+    <uses-feature android:name="android.hardware.usb.host.accessory" />
+
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
@@ -28,7 +31,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.USB_PERMISSION" />
     <uses-permission
         android:name="android.permission.LOCATION_HARDWARE"
         tools:ignore="ProtectedPermissions" />
@@ -47,22 +49,36 @@
     <permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-feature android:name="android.hardware.usb.accessory" />
     <permission android:name="android.permission.USB_PERMISSION" />
 
 
-
     <application android:appCategory="audio">
+        <uses-library android:name="com.android.future.usb.accessory" />
+        <activity
+            android:name=".ui.Activity.MainActivity"
+            android:exported="true">
+            <meta-data
+                android:name="com.google.android.gms.car.application"
+                android:resource="@xml/automotive_app_desc" />
+            <meta-data
+                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
+                android:resource="@xml/accessory_filter" />
 
-        <meta-data
-            android:name="com.google.android.gms.car.application"
-            android:resource="@xml/automotive_app_desc" />
+            <intent-filter>
+                <action android:name="android.media.browse.MediaBrowserService" />
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+                <action android:name="android.hardware.usb.action." />
+            </intent-filter>
+        </activity>
+
 
         <service
             android:name="com.infolitz.musicplayer.shared.MyMusicService"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.media.browse.MediaBrowserService" />
+                <action android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED" />
+                <action android:name="android.hardware.usb.action." />
             </intent-filter>
         </service>
 

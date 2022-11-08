@@ -3,4 +3,7 @@
     <string name="choose_file">Choose a file</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="directory">Directory</string>
+    <string name="file">File</string>
 </resources>
