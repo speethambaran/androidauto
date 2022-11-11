@@ -11,7 +11,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.hardware.usb.UsbAccessory;
+import android.hardware.usb.UsbConstants;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
@@ -48,6 +48,7 @@ import com.infolitz.musicplayer.shared.utils.RecyclerTouchListner;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -68,21 +69,24 @@ public class List_musicFragment extends Fragment {
     ActivityResultLauncher<String> recordAudioPermissionLauncher;
     final String recordAudioPermission = Manifest.permission.RECORD_AUDIO;
     String name;
-    SetUpDevice setUpDevice;
     private UsbManager usbManager;
     private UsbDevice usbDevice;
-    UsbAccessory accessory;
-    PendingIntent permissionIntent;
 
+    PendingIntent permissionIntent;
+    IntentFilter filter, filter1, filter2;
+    UsbRequest usbRequest;
     UsbDeviceConnection connection = null;
     UsbMassStorageDevice device;
+
+    UsbEndpoint mEndpointBulkIn;
+    UsbEndpoint mEndpointBulkOut;
+    UsbInterface usbInterface = null;
 
     private final byte[] bytes = new byte[64];
     private static int TIMEOUT = 0;
     private boolean forceClaim = true;
 
-
-    private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
+    private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION" ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -98,7 +102,7 @@ public class List_musicFragment extends Fragment {
     }
 
     private void init() {
-
+        checkSelfPermission();
         binding.rlParentMusic.setVisibility(View.GONE);
         binding.rlRecycler.setVisibility(View.VISIBLE);
         binding.rlPlayed.setVisibility(View.GONE);
@@ -106,8 +110,13 @@ public class List_musicFragment extends Fragment {
         usbManager = (UsbManager) getActivity().getSystemService(Context.USB_SERVICE);
 
         permissionIntent = PendingIntent.getBroadcast(getActivity(), 0, new Intent(ACTION_USB_PERMISSION), 0);
-        IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
+
+
+        filter = new IntentFilter();
+        filter.addAction(ACTION_USB_PERMISSION);
         getActivity().registerReceiver(usbReceiver, filter);
+
+
         usbManager();
 
 
@@ -117,7 +126,7 @@ public class List_musicFragment extends Fragment {
             } else {
                 UserResponse();
             }
-            checkSelfPermission();
+
         });
         storagePermissionLauncher.launch(permission);
 
@@ -217,6 +226,12 @@ public class List_musicFragment extends Fragment {
 
 
     }
+
+
+
+
+
+
 
 
     private void fetchSongs() {
@@ -338,10 +353,11 @@ public class List_musicFragment extends Fragment {
                     device = deviceIterator.next();
                 }
                 Log.d("CDEVICE", "Host FOUND " + hostDevice);
+
                 usbManager.requestPermission(device, permissionIntent);
                 boolean hasPermision = usbManager.hasPermission(device);
                 if (hasPermision) {
-                    UsbDeviceConnection connection = usbManager.openDevice(device);
+                    connection = usbManager.openDevice(device);
                     if (connection == null) {
                         return;
                     } else {
@@ -350,32 +366,13 @@ public class List_musicFragment extends Fragment {
                 }
             } else {
                 Log.d("CDEVICE", "Host EMPTY");
+                Toast.makeText(getActivity(), "No device found", Toast.LENGTH_SHORT).show();
             }
         }
 
-
-/*        if (clef != null) {
-            File directory = new File("/dev/bus/usb/001/"); //  /storage/UsbDriveA/    ....  /dev/bus/usb/001/006/
-            Log.e("directory", String.valueOf(directory));
-            if (directory != null) {
-
-                Log.e("got into directory", String.valueOf(directory.canRead()));
-
-                //.......
-                if (directory.canRead()) {
-
-                    File dir = new File("/dev/bus/usb/001/");
-                    if (dir.exists() && dir.isDirectory()) {
-                        // do something here
-                        Log.e("g...", dir.exists() + " and " + dir.isDirectory());
-//                        Uri.parse(new File("/dev/bus/usb/001/").toString());
-                    }
-                }
-
-                //..............
-            }
-        }*/
     }
+
+
 
 
     final BroadcastReceiver usbReceiver = new BroadcastReceiver() {
@@ -391,58 +388,116 @@ public class List_musicFragment extends Fragment {
                         //call method to set up accessory communication
                         Log.d("CDEVICE", "permission Accepted for device " + usbDevice.getManufacturerName());
                         connectUSB(usbDevice);
-
                     }
-
                 }
-            } else if (UsbManager.ACTION_USB_DEVICE_ATTACHED == action) {
+            }
+            /*else if (UsbManager.ACTION_USB_DEVICE_ATTACHED == action) {
                 usbDevice = (UsbDevice) intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
                 Log.d("CDEVICE", "USB device attached" + usbDevice.getManufacturerName());
                 if (usbDevice != null) {
-
+//                    connectUSB(usbDevice);
                 }
-            }
+            } else if (UsbManager.ACTION_USB_DEVICE_DETACHED == action) {
+                usbDevice = (UsbDevice) intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+                Log.d("CDEVICE", "USB device Detached" + usbDevice.getManufacturerName());
+                if (usbDevice != null) {
+//
+                }
+            }*/
         }
-
 
     };
 
 
+
     private void connectUSB(UsbDevice device) {
+
         Log.d("CDEVICE", "Connect USb  : " + device.getManufacturerName());
-        UsbInterface intf = device.getInterface(0);
-        UsbEndpoint endpoint = intf.getEndpoint(0);
 
-        int packetSize = endpoint.getMaxPacketSize();
-        Log.d("CDEVICE", "Packet size  : " + packetSize);
+        UsbInterface intf = null;
 
 
-        ByteBuffer buffer = ByteBuffer.allocate(packetSize);
-        UsbDeviceConnection connection = usbManager.openDevice(device);
-        UsbRequest usbRequest = new UsbRequest();
+//        int packetSize = endpoint.getMaxPacketSize();
+//        Log.d("CDEVICE", "Packet size  : " + packetSize);
+        int count = device.getInterfaceCount();
+        Log.d("CDEVICE", "interface count   : " + count);
 
-        usbRequest.initialize(connection, endpoint);
-        usbRequest.queue(buffer, 1);
+        for (int i = 0; i < count; i++) {
+            intf = device.getInterface(i);
+            UsbEndpoint tOut = null;
+            UsbEndpoint tIn = null;
+            int tEndpointCnt = intf.getEndpointCount();
 
-        if (connection.requestWait() == usbRequest) {
+            if (tEndpointCnt >= 2) {
+                for (int j = 0; j < tEndpointCnt; j++) {
+                    if (intf.getEndpoint(j).getType() == UsbConstants.USB_ENDPOINT_XFER_BULK) {
+                        //Bulk endpoint type ??
+                        if (intf.getEndpoint(j).getDirection() == UsbConstants.USB_DIR_OUT)
+                            tOut = intf.getEndpoint(j);
+                        else if (intf.getEndpoint(j).getDirection() == UsbConstants.USB_DIR_IN)
+                            tIn = intf.getEndpoint(j);
+                    }
+                }
+                if (tOut != null && tIn != null) {
 
-            UsbRequest inRequest = new UsbRequest();
-            inRequest.initialize(connection, endpoint);
-
-            if (inRequest.queue(buffer, packetSize) == true) {
-
-                connection.requestWait();
-
-                // get response data
-                byte[] data = buffer.array();
-                Log.d("CDEVICE", " byte Packet size  : " + data.toString());
+                    usbInterface = intf;
+                    mEndpointBulkIn = tIn;
+                    mEndpointBulkOut = tOut;
+                }
             }
 
-//            UsbDeviceConnection connection = usbManager.openDevice(device);
+            Log.d("CDEVICE", "USB  UI, EIN ,EOUT  :" + usbInterface + mEndpointBulkIn + mEndpointBulkOut);
 
-//        connection.claimInterface(intf, forceClaim);
-//        connection.bulkTransfer(endpoint, bytes, bytes.length, TIMEOUT); //do in another thread
+            if (usbInterface == null) return;
+            Log.d("CDEVICE", "Usb interface is  ::" + usbInterface);
 
+            if (device != null) {
+                if (usbManager.hasPermission(device)) {
+                    Log.d("CDEVICE", "Usb has permission ::" + usbManager.hasPermission(device));
+                    connection = usbManager.openDevice(device);
+
+                    Log.d("CDEVICE", "Connection availble  ::" + connection);
+                    if (connection != null && connection.claimInterface(usbInterface, true)) {
+
+                        final int inMax = tIn.getMaxPacketSize();
+                        final ByteBuffer buffer = ByteBuffer.allocate(inMax);
+                        final UsbRequest usbRequest = new UsbRequest();
+                        boolean data = usbRequest.initialize(connection, mEndpointBulkIn);
+
+
+                        Log.d("CDEVICE", "Usb Intailize   ::" + data);
+
+
+                        Boolean permission = usbRequest.queue(buffer, inMax);
+                        Log.d("CDEVICE", "usbRequest.queue  ::" + permission);
+
+                        if (permission == true) {
+                            Log.d("CDEVICE", "usb request in permission  ::" + permission);
+                            Log.d("CDEVICE", " DEvice name in permission " + device.getManufacturerName());
+
+                            while (true) {
+                                final UsbRequest uRequest = connection.requestWait();
+                                Log.d("CDEVICE", "usb request wait  ::" + uRequest);
+                                if (uRequest != null) {
+                                    byte[] array = buffer.array();
+
+                                    Log.d("CDEVICE", "usb request wait Success " + Arrays.toString(array));
+                                } else {
+                                    Log.d("CDEVICE", "usb request wait does not match ");
+                                }
+                            }
+                        } else {
+                            Log.d("CDEVICE", "usb request in per   ::" + permission);
+                        }
+                    }
+
+
+                } else {
+                    Toast.makeText(getActivity(), "test??", Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(getActivity(), "testUSBtest", Toast.LENGTH_LONG).show();
+            }
         }
     }
 

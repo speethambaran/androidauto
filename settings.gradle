@@ -16,3 +16,5 @@ rootProject.name = "Music Player"
 include ':mobile'
 include ':automotive'
 include ':shared'
+
+
