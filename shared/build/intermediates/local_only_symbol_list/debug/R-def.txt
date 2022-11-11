@@ -1,0 +1,26 @@
+R_DEF: Internal format may change without notice
+local
+color black
+color purple_200
+color purple_500
+color purple_700
+color teal_200
+color teal_700
+color white
+drawable speedometer_image_indicator
+id action_send
+id btn2
+id btnn
+id devicesListView
+id discover
+id main_layout
+id speedometer
+id speedometer_recyclerView
+id text_c
+layout activity_bluetooth
+layout activity_main
+layout activity_speedometer
+layout card_view_speedometer
+string app_name
+style Theme.MyCarSpeed
+xml automotive_app_desc

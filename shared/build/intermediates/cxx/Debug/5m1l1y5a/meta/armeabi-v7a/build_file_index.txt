@@ -1,0 +1,1 @@
+D:\Android Infolitz_ NP\Android Automotive Required files\Projects\Commwithc\shared\src\main\cpp\CMakeLists.txt

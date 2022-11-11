@@ -1,0 +1,46 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+}
+android {
+    compileSdkVersion 32
+
+    defaultConfig {
+        minSdkVersion 28
+        targetSdkVersion 32
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+                abiFilters "arm64-v8a","armeabi-v7a"
+                targets "srkMyLib"
+                arguments "-DANDROID_PLATFORM=android-23"
+            }
+        }
+        sourceSets.main {
+            jniLibs.srcDir 'src/main/libs' //set .so files location to libs instead of jniLibs
+            jni.srcDirs = [] //disable automatic ndk-build call
+        }
+    }
+    externalNativeBuild{
+        /* ndkBuild {
+             path "src/main/jni/Android.mk"
+         }*/
+        cmake{
+            path "src/main/cpp/CMakeLists.txt"
+            version "3.22.1"
+        }
+    }
+}
+
+dependencies {
+    implementation 'androidx.media:media:1.6.0'
+    implementation 'androidx.media:media:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation project(path: ':speedviewlib')
+    implementation 'com.google.android.things:androidthings:+'
+}
