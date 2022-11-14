@@ -1,5 +1,8 @@
 package com.infolitz.musicplayer.shared.ui.Fragment;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -20,17 +23,19 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 
-import com.infolitz.musicplayer.shared.databinding.FragmentWriteUsbBinding;
+import com.infolitz.musicplayer.shared.R;
+import com.infolitz.musicplayer.shared.databinding.FragmentExampleWriteUsbBinding;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 
-public class WriteUsbFragment extends Fragment {
+public class WriteUsbExampleFragment extends Fragment {
 
-    FragmentWriteUsbBinding binding;
+    FragmentExampleWriteUsbBinding binding;
 
     private UsbInterface usbInterfaceFound = null;
     private UsbEndpoint endpointOut = null;
@@ -40,11 +45,14 @@ public class WriteUsbFragment extends Fragment {
     private UsbDeviceConnection mUsbDeviceConnection;
     private Thread mSerialInThread;
 
+    public static final String NOTIFICATION_CHANNEL_ID = "10001";
+    private final static String default_notification_channel_id = "default";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentWriteUsbBinding.inflate(inflater, container, false);
+        binding = FragmentExampleWriteUsbBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -71,12 +79,12 @@ public class WriteUsbFragment extends Fragment {
                 if (null != device) {
 
                     operateDevice(device);
-                    Toast.makeText(getActivity(), "attached", Toast.LENGTH_LONG).show();
+                    scheduleNotification(getNotification("USB Attached"), 1000);
                 }
 
             } else if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)) {
 
-                Toast.makeText(getActivity(), "USBtest", Toast.LENGTH_LONG).show();
+                scheduleNotification(getNotification("USB Removed"), 1000);
             }
         }
     };
@@ -182,5 +190,25 @@ public class WriteUsbFragment extends Fragment {
         }
     }
 
+    private void scheduleNotification(Notification notification, int delay) {
+        Intent notificationIntent = new Intent(getActivity(), MyNotificationPublisher.class);
+        notificationIntent.putExtra(MyNotificationPublisher.NOTIFICATION_ID, 1);
+        notificationIntent.putExtra(MyNotificationPublisher.NOTIFICATION, notification);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        long futureInMillis = SystemClock.elapsedRealtime() + delay;
+        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        assert alarmManager != null;
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
+    }
+
+    private Notification getNotification(String content) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), default_notification_channel_id);
+        builder.setContentTitle("Scheduled Notification");
+        builder.setContentText(content);
+        builder.setSmallIcon(R.drawable.ic_playlist_play);
+        builder.setAutoCancel(true);
+        builder.setChannelId(NOTIFICATION_CHANNEL_ID);
+        return builder.build();
+    }
 
 }

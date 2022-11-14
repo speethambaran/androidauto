@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Fragment.WriteUsbFragment">
+    tools:context=".ui.Fragment.WriteUsbExampleFragment">
 
     <TextView
         android:id="@+id/mTextView"
@@ -12,7 +12,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:gravity="center"
-        android:text="Hi am here"
+        android:text="Hi am Empty"
         android:textAllCaps="true"
         android:textSize="18sp"
         android:textStyle="bold" />

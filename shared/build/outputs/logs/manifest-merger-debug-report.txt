@@ -1,8 +1,8 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:1:1-88:12
-INJECTED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:1:1-88:12
-INJECTED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:1:1-88:12
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:1:1-89:12
+INJECTED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:1:1-89:12
+INJECTED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:1:1-89:12
 	package
 		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:3:5-46
 		INJECTED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml
@@ -134,7 +134,7 @@ ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidMan
 	android:name
 		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:53:17-65
 application
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:56:5-86:19
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:56:5-87:19
 	android:appCategory
 		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:56:18-45
 uses-library#com.android.future.usb.accessory
@@ -185,6 +185,10 @@ action#android.hardware.usb.action.USB_ACCESSORY_ATTACHED
 ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:81:17-93
 	android:name
 		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:81:25-90
+receiver#com.infolitz.musicplayer.shared.ui.Fragment.MyNotificationPublisher
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:86:9-73
+	android:name
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:86:19-70
 uses-sdk
 INJECTED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml

@@ -85,6 +85,8 @@
                 <action android:name="android.hardware.usb.action." />
             </intent-filter>
         </service>
+
+        <receiver android:name="com.infolitz.musicplayer.shared.ui.Fragment.MyNotificationPublisher" />
     </application>
 
 </manifest>

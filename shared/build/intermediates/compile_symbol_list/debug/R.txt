@@ -55,7 +55,9 @@ int font muli_semi_bold 0x0
 int font muli_semi_bold_italic 0x0
 int id Container 0x0
 int id artWorkView 0x0
+int id bar 0x0
 int id btnGet 0x0
+int id buttonLed 0x0
 int id deviceList 0x0
 int id durationView 0x0
 int id ivIcon 0x0
@@ -77,6 +79,7 @@ int id llPrent 0x0
 int id llTool 0x0
 int id ll_1 0x0
 int id ll_2 0x0
+int id mTextView 0x0
 int id rlPlayed 0x0
 int id rlRecycler 0x0
 int id rl_Main 0x0
@@ -92,7 +95,10 @@ int id tv_HomeSongName 0x0
 int id tv_Title 0x0
 int layout activity_main 0x0
 int layout fragment_bluetooth 0x0
+int layout fragment_example_write_usb 0x0
 int layout fragment_list_music 0x0
+int layout fragment_read_usb 0x0
+int layout fragment_read_write 0x0
 int layout parent_music 0x0
 int layout single_musiclistlayout 0x0
 int layout toolbar 0x0

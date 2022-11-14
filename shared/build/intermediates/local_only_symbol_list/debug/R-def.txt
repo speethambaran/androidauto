@@ -57,7 +57,9 @@ font muli_semi_bold
 font muli_semi_bold_italic
 id Container
 id artWorkView
+id bar
 id btnGet
+id buttonLed
 id deviceList
 id durationView
 id ivIcon
@@ -79,6 +81,7 @@ id llPrent
 id llTool
 id ll_1
 id ll_2
+id mTextView
 id rlPlayed
 id rlRecycler
 id rl_Main
@@ -94,7 +97,10 @@ id tv_HomeSongName
 id tv_Title
 layout activity_main
 layout fragment_bluetooth
+layout fragment_example_write_usb
 layout fragment_list_music
+layout fragment_read_usb
+layout fragment_read_write
 layout parent_music
 layout single_musiclistlayout
 layout toolbar

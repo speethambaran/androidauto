@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.infolitz.musicplayer.shared.R;
 import com.infolitz.musicplayer.shared.databinding.ActivityMainBinding;
 import com.infolitz.musicplayer.shared.ui.Fragment.BluetoothFragment;
-import com.infolitz.musicplayer.shared.ui.Fragment.WriteUsbFragment;
+import com.infolitz.musicplayer.shared.ui.Fragment.ReadWriteFragment;
 
 
 public class MainActivity extends BaseActivity {
@@ -48,8 +48,14 @@ public class MainActivity extends BaseActivity {
 //        List_musicFragment listMusicFragment = new List_musicFragment();
 //        fragmentTransaction.add(binding.Container.getId(), listMusicFragment);
 
-        WriteUsbFragment writeUsbFragment = new WriteUsbFragment();
-        fragmentTransaction.add(binding.Container.getId(), writeUsbFragment);
+/*                ReadUsbFragment readUsbFragment = new ReadUsbFragment();
+        fragmentTransaction.add(binding.Container.getId(), readUsbFragment);*/
+
+//        WriteUsbExampleFragment writeUsbExampleFragment = new WriteUsbExampleFragment();
+//        fragmentTransaction.add(binding.Container.getId(), writeUsbExampleFragment);
+
+        ReadWriteFragment readWriteFragment = new ReadWriteFragment();
+        fragmentTransaction.add(binding.Container.getId(), readWriteFragment);
         fragmentTransaction.commit();
 
 
