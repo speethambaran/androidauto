@@ -1,6 +1,7 @@
 package com.infolitz.commwithc.shared;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,9 +51,12 @@ public class SpeedometerActivity extends AppCompatActivity {
 
         TextView textView=findViewById(R.id.text_c);
 //        textView.setText(communicateWithC.useWiringLib());
-        textView.setText("" + communicateWithC.testConn());
-        textView.setText("" + communicateWithC.useWiringLib());
-        Log.e("from java testingg",""+communicateWithC.useWiringLib());
+//        textView.setText("" + communicateWithC.testConn());
+//        textView.setText("" + communicateWithC.useWiringLib());
+        /*new Thread(new ReadUart()).start();*/ //ReadUart();
+         new Thread(new MyThread()).start();//ReadUart();
+//        Log.e("from java testingg",""+communicateWithC.useWiringLib());
+
 //        communicateWithC= new CommunicateWithC();
        /* String abcd= communicateWithC.MyMethod();//for kotlin communication with cpp_code
         Log.e("from kotlin",abcd);
@@ -168,6 +172,53 @@ public class SpeedometerActivity extends AppCompatActivity {
         System.loadLibrary("test_code");
    }
    public native String ForTestingg();*///for java communication with cpp_code
+  /* class ReadUart implements Runnable {
+       @Override
+       public void run() {
+
+               try {
+                   Thread.sleep(1000);
+               } catch (InterruptedException e) {
+                   e.printStackTrace();
+               }
+           Log.e("from java testingg",""+communicateWithC.useWiringLib());
+       }
+
+   }*/
+    /*public void ReadUart() {
+        int waitTime = 2000 ; // 2 sec in miliseconds
+        Runnable r = new Runnable() {
+            @Override
+            public void run(){
+//                new BatteryLifeTask.execute();
+                Log.e("from java testingg",""+communicateWithC.useWiringLib());
+            }
+        };
+        Handler h = new Handler();
+        h.postDelayed(r, waitTime);
+    }*/
+
+    public class MyThread extends  Thread {
+        private boolean stop = false;
+        TextView textView=findViewById(R.id.text_c);
+
+        @Override public void run() {
+            while (!stop) {
+                try {
+                    Thread.sleep(2000);
+//                    Log.e("from java testingg",""+communicateWithC.useWiringLib());
+                    textView.setText("" + communicateWithC.useWiringLib());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                // poll the USB and dispatch changes to the views with a Handler
+            }
+        }
+
+         public void doStop() {
+            stop = true;
+        }
+    };
     //.... for uart end
 }
 

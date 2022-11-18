@@ -11,7 +11,8 @@ class CommunicateWithC : AppCompatActivity() {
 //    }
 
 //    external fun MyMethod(): String
-    external fun useWiringLib(): Int
+//    external fun useWiringLib():String
+    external fun useWiringLib():Int
     external fun testConn(): Int
 
     companion object {

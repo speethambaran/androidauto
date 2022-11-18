@@ -125,7 +125,21 @@ int serialGetchar (const int fd)
 
   return ((int)x) & 0xFF ;
 }
+void serialGetstring( char *p, const int fd )
+{
+  uint8_t y ;
 
+  for(int i=0;i<=15;i++) {
+    if (read(fd, &y, 1) != 1) {
+      continue;
+    }else{
+      p[i]= (char) (((int)y) & 0xFF) ;
+    }
+  }
+  /*for(int i=0;i<=15;i++) {
+    p[i]=(char) serialGetchar(fd);
+  }*/
+}
 int bd ()
 {
   int result =0;
