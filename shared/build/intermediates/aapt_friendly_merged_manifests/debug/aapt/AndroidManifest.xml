@@ -86,7 +86,7 @@
             </intent-filter>
         </service>
 
-        <receiver android:name="com.infolitz.musicplayer.shared.ui.Fragment.MyNotificationPublisher" />
+        <receiver android:name="com.infolitz.musicplayer.shared.ui.MyNotificationPublisher" />
     </application>
 
 </manifest>

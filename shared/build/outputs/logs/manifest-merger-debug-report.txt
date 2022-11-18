@@ -185,10 +185,10 @@ action#android.hardware.usb.action.USB_ACCESSORY_ATTACHED
 ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:81:17-93
 	android:name
 		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:81:25-90
-receiver#com.infolitz.musicplayer.shared.ui.Fragment.MyNotificationPublisher
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:86:9-73
+receiver#com.infolitz.musicplayer.shared.ui.MyNotificationPublisher
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:86:9-64
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:86:19-70
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:86:19-61
 uses-sdk
 INJECTED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml

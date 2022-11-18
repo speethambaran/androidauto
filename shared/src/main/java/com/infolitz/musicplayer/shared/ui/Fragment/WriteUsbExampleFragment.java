@@ -28,6 +28,7 @@ import androidx.fragment.app.Fragment;
 
 import com.infolitz.musicplayer.shared.R;
 import com.infolitz.musicplayer.shared.databinding.FragmentExampleWriteUsbBinding;
+import com.infolitz.musicplayer.shared.ui.MyNotificationPublisher;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;
@@ -85,6 +86,7 @@ public class WriteUsbExampleFragment extends Fragment {
             } else if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)) {
 
                 scheduleNotification(getNotification("USB Removed"), 1000);
+                operateDevice(null);
             }
         }
     };
@@ -190,6 +192,8 @@ public class WriteUsbExampleFragment extends Fragment {
         }
     }
 
+
+
     private void scheduleNotification(Notification notification, int delay) {
         Intent notificationIntent = new Intent(getActivity(), MyNotificationPublisher.class);
         notificationIntent.putExtra(MyNotificationPublisher.NOTIFICATION_ID, 1);
@@ -203,7 +207,7 @@ public class WriteUsbExampleFragment extends Fragment {
 
     private Notification getNotification(String content) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), default_notification_channel_id);
-        builder.setContentTitle("Scheduled Notification");
+        builder.setContentTitle("USB Notification");
         builder.setContentText(content);
         builder.setSmallIcon(R.drawable.ic_playlist_play);
         builder.setAutoCancel(true);

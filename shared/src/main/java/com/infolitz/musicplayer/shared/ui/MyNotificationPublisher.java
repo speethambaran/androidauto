@@ -1,4 +1,4 @@
-package com.infolitz.musicplayer.shared.ui.Fragment;
+package com.infolitz.musicplayer.shared.ui;
 
 import static com.infolitz.musicplayer.shared.ui.Fragment.WriteUsbExampleFragment.NOTIFICATION_CHANNEL_ID;
 

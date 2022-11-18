@@ -183,9 +183,9 @@
 86            </intent-filter>
 87        </service>
 88
-89        <receiver android:name="com.infolitz.musicplayer.shared.ui.Fragment.MyNotificationPublisher" />
-89-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:86:9-73
-89-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:86:19-70
+89        <receiver android:name="com.infolitz.musicplayer.shared.ui.MyNotificationPublisher" />
+89-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:86:9-64
+89-->D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:86:19-61
 90    </application>
 91
 92</manifest>

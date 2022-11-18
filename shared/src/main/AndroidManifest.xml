@@ -83,7 +83,7 @@
             </intent-filter>
         </service>
 
-        <receiver android:name=".ui.Fragment.MyNotificationPublisher" />
+        <receiver android:name=".ui.MyNotificationPublisher" />
     </application>
 
 </manifest>

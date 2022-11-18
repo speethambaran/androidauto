@@ -161,6 +161,7 @@ public class ReadWriteFragment extends BaseFragments implements Runnable {
         while (true) {
             request.queue(buffer, 1);
             if (usbDeviceConnection.requestWait() == request) {
+                Log.d("CDEVICE", " usbDeviceConnection.requestWait()  ::" + usbDeviceConnection.requestWait());
                 byte rxCmd = buffer.get(0);
                 if (rxCmd != 0) {
                     binding.bar.setProgress((int) rxCmd);
