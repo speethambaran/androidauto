@@ -53,7 +53,6 @@ public class ReadUsbFragment extends Fragment implements Runnable {
     UsbInterface usbInterface = null;
 
 
-    private final byte[] bytes = new byte[64];
     private static int TIMEOUT = 100;
     private boolean forceClaim = true;
 
@@ -84,6 +83,20 @@ public class ReadUsbFragment extends Fragment implements Runnable {
 
 
         usbManager();
+
+//        SerialPort serialPort = new SerialPort("/dev/bus/usb/001/005");
+//
+//            serialPort.openPort();//Open serial port
+//            serialPort.setParams(4800, 8, 1, 0);//Set params.
+//            while(true) {
+//                byte[] buffer = serialPort.readBytes(10);
+//                if(buffer!=null) {
+//                    for(byte b:buffer) {
+//                        Log.d("CD", "Serail port   " + b);
+//                    }
+//                }
+//            }
+
 
     }
 
@@ -175,8 +188,10 @@ public class ReadUsbFragment extends Fragment implements Runnable {
                 }
             }
         }
-        Log.d("CD", " EIn :" + mEndpointBulkIn.getMaxPacketSize());
-        Log.d("CD", " EOut:" + mEndpointBulkOut.getMaxPacketSize());
+
+
+        Log.d("CD", " EIn :" + mEndpointBulkIn.toString());
+        Log.d("CD", " EOut:" + mEndpointBulkOut.toString());
 
         if (usbInterface == null) return;
         Log.d("CD", "Usb interface is  ::" + usbInterface);
@@ -201,19 +216,19 @@ public class ReadUsbFragment extends Fragment implements Runnable {
 
     @Override
     public void run() {
+        byte[] bytes = new byte[mEndpointBulkOut.getMaxPacketSize()];
 
-        final ByteBuffer buffer = ByteBuffer.allocate(1);
+        ByteBuffer buffer = ByteBuffer.allocate(mEndpointBulkOut.getMaxPacketSize());
         Log.d("CD", "Usb Buffer   ::" + Arrays.toString(buffer.array()));
 
         final UsbRequest usbRequest = new UsbRequest();
         boolean data = usbRequest.initialize(connection, mEndpointBulkOut);
         Log.d("CD", "Usb Intailize   ::" + data);
 
-
-        Boolean permission = usbRequest.queue(buffer, 1);
+        boolean permission = usbRequest.queue(buffer, mEndpointBulkOut.getMaxPacketSize());
         Log.d("CD", "usbRequest.queue  ::" + permission);
 
-        if (permission == true) {
+        if (permission) {
             Log.d("CD", "usb request in permission  ::" + permission);
             Log.d("CD", " Device name in permission " + usbDevice.getManufacturerName());
 
@@ -227,19 +242,32 @@ public class ReadUsbFragment extends Fragment implements Runnable {
                     Log.d("CD", "usb request wait Success ");
 
                     boolean cInterface = connection.claimInterface(usbInterface, forceClaim);
+
+
                     if (cInterface) {
                         Log.d("CD", "claim interfaces " + cInterface);
 
-                        connection.controlTransfer(0x40, 0x03, 0x0034, 0, null, 0, 0); // baud rate 57600
-                        connection.controlTransfer(0x40, 0x04, 0x0008, 0, null, 0, 0); // 8-N-1
-                        int a = connection.bulkTransfer(mEndpointBulkOut, bytes, bytes.length, TIMEOUT);
+                        int fileDesc = connection.getFileDescriptor();
+                        Log.d("CD", "file desc " + fileDesc);
+                        byte[] rawDescriptors = connection.getRawDescriptors();
+                        Log.d("CD", "raw desc " + Arrays.toString(rawDescriptors));
+
+                        new Thread(() -> {
 
 
-                        if (a != -1) {
-                            Log.d("CD", "got Data Length Success " + a);
-                        } else {
-                            Log.d("CD", "got Data Length False " + a);
-                        }
+                            int a = connection.bulkTransfer(mEndpointBulkOut, bytes, mEndpointBulkOut.getMaxPacketSize(), 1000);
+
+//                        connection.controlTransfer(UsbConstants.USB_ENDPOINT_XFER_INT, 0, 0x00, 0, bytes, 11, 0);
+//                        Log.d("CD", "got Data Length Success " + Arrays.toString(bytes));
+                            if (a != -1) {
+                                Log.d("CD", "got Data Length Success " + a);
+                            } else {
+                                Log.d("CD", "got Data Length False " + a);
+                            }
+
+
+                        }).start();
+
                     }
 
 

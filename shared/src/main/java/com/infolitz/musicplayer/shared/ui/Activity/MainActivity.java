@@ -43,6 +43,9 @@ public class MainActivity extends BaseActivity {
 
     private void init() {
 
+
+
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
