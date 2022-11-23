@@ -1,20 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.infolitz.commwithc.shared">
-
-    <!--Before Android 12 (but still needed location, even if not requested)-->
+    <!-- Before Android 12 (but still needed location, even if not requested) -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30" />
-    <!--From Android 12-->
-    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:usesPermissionFlags="neverForLocation" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH"
+        android:maxSdkVersion="30" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_ADMIN"
+        android:maxSdkVersion="30" /> <!-- From Android 12 -->
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_SCAN"
+        android:usesPermissionFlags="neverForLocation" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-
-    <uses-permission android:name="com.google.android.things.permission.USE_PERIPHERAL_IO"/>
+    <uses-permission android:name="com.google.android.things.permission.USE_PERIPHERAL_IO" />
     <uses-permission android:name="com.google.android.things.permission.MANAGE_INPUT_DRIVERS" />
 
-
     <application android:appCategory="audio">
+        <activity
+            android:name=".SpeedRpmActivity"
+            android:exported="false" />
         <activity
             android:name=".BluetoothActivity"
             android:exported="false" />
@@ -43,4 +49,3 @@
     </application>
 
 </manifest>
-

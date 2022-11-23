@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SpeedRpmActivity"
+    tools:ignore="HardcodedText">
+
+    <LinearLayout
+        android:id="@+id/activity_start_end_degree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:padding="10dp">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_weight="1">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <com.github.anastr.speedviewlib.SpeedView
+                    android:id="@+id/speedometer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    app:sv_tickNumber="6" />
+
+            </FrameLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_weight="1" >
+            <com.github.anastr.speedviewlib.ImageSpeedometer
+                android:id="@+id/imageSpeedometer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                app:sv_image="@drawable/for_image_speedometer"
+                app:sv_indicator="LineIndicator"
+                app:sv_indicatorColor="#a750bcff"
+                app:sv_speedTextColor="#fff"
+                app:sv_unitTextColor="#fff"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

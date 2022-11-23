@@ -125,24 +125,25 @@ int serialGetchar (const int fd)
 
   return ((int)x) & 0xFF ;
 }
-void serialGetstring( char *p, const int fd )
+void serialGetstring( char *p, const int fd ) //created by Nithin. Aims to read String At a time
 {
+  //ssize_t a;
   uint8_t y ;
 
   for(int i=0;i<=15;i++) {
     if (read(fd, &y, 1) != 1) {
-      continue;
+      break;
     }else{
       p[i]= (char) (((int)y) & 0xFF) ;
     }
   }
+  /*a=read(fd, p, 15);
+  if(a != 15){
+    return a;
+  }else{
+    return 15;
+  }*/
   /*for(int i=0;i<=15;i++) {
     p[i]=(char) serialGetchar(fd);
   }*/
-}
-int bd ()
-{
-  int result =0;
-
-  return result ;
 }

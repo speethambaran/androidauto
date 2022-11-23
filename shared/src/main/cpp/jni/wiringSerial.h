@@ -8,7 +8,6 @@ extern void  serialPutchar   (const int fd, const unsigned char c) ;
 extern int   serialDataAvail (const int fd) ;
 extern int   serialGetchar   (const int fd) ;
 extern void  serialGetstring  ( char *p, const int fd ) ;
-extern int   bd   () ;
 
 #ifdef __cplusplus
 }
