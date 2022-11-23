@@ -216,7 +216,7 @@ public class ReadUsbFragment extends Fragment implements Runnable {
 
     @Override
     public void run() {
-        byte[] bytes = new byte[mEndpointBulkOut.getMaxPacketSize()];
+//        byte[] bytes = new byte[mEndpointBulkOut.getMaxPacketSize()];
 
         ByteBuffer buffer = ByteBuffer.allocate(mEndpointBulkOut.getMaxPacketSize());
         Log.d("CD", "Usb Buffer   ::" + Arrays.toString(buffer.array()));
@@ -252,21 +252,16 @@ public class ReadUsbFragment extends Fragment implements Runnable {
                         byte[] rawDescriptors = connection.getRawDescriptors();
                         Log.d("CD", "raw desc " + Arrays.toString(rawDescriptors));
 
-                        new Thread(() -> {
-
-
-                            int a = connection.bulkTransfer(mEndpointBulkOut, bytes, mEndpointBulkOut.getMaxPacketSize(), 1000);
-
-//                        connection.controlTransfer(UsbConstants.USB_ENDPOINT_XFER_INT, 0, 0x00, 0, bytes, 11, 0);
-//                        Log.d("CD", "got Data Length Success " + Arrays.toString(bytes));
-                            if (a != -1) {
-                                Log.d("CD", "got Data Length Success " + a);
-                            } else {
-                                Log.d("CD", "got Data Length False " + a);
-                            }
-
-
-                        }).start();
+                        //                            int a = connection.bulkTransfer(mEndpointBulkOut, bytes, mEndpointBulkOut.getMaxPacketSize(), 1000);
+                        //
+                        ////                        connection.controlTransfer(UsbConstants.USB_ENDPOINT_XFER_INT, 0, 0x00, 0, bytes, 11, 0);
+                        ////                        Log.d("CD", "got Data Length Success " + Arrays.toString(bytes));
+                        //                            if (a != -1) {
+                        //                                Log.d("CD", "got Data Length Success " + a);
+                        //                            } else {
+                        //                                Log.d("CD", "got Data Length False " + a);
+                        //                            }
+                        new Thread(this::readData).start();
 
                     }
 
@@ -280,6 +275,23 @@ public class ReadUsbFragment extends Fragment implements Runnable {
         }
     }
 
+    private byte[] readData() {
+        long rStart = System.currentTimeMillis();
+        byte[] mReadData = new byte[mEndpointBulkOut.getMaxPacketSize()];
+        while (true) {
+//            int bytesCount = connection.bulkTransfer(null, mReadData, mReadData.length, 9600);
+            int bytesCount = connection.bulkTransfer(mEndpointBulkOut, mReadData, mReadData.length, 9600);
+            if (bytesCount >= 0) {
+                return mReadData;
+            } else if (System.currentTimeMillis() - rStart > 5000) {
+                return new byte[]{};
+            } else {
+                Log.d("CD", String.format("Bulk read  cmd" + bytesCount));
+            }
+
+
+        }
+    }
 
     private Boolean checkSelfPermission() {
 
