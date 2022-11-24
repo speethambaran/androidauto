@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         btn2.setOnClickListener(view -> {
             Intent myIntent = new Intent(MainActivity.this, SpeedRpmActivity.class);
+//            Intent myIntent = new Intent(MainActivity.this, SpeedometerActivity.class);
             MainActivity.this.startActivity(myIntent);
         });
     }

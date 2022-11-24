@@ -18,6 +18,7 @@ int id main_layout 0x0
 int id speedometer 0x0
 int id speedometer_recyclerView 0x0
 int id text_c 0x0
+int id text_c_1 0x0
 int layout activity_bluetooth 0x0
 int layout activity_main 0x0
 int layout activity_speed_rpm 0x0

@@ -20,6 +20,7 @@ id main_layout
 id speedometer
 id speedometer_recyclerView
 id text_c
+id text_c_1
 layout activity_bluetooth
 layout activity_main
 layout activity_speed_rpm

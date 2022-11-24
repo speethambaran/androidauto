@@ -11,8 +11,12 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <android/log.h>
+#include <time.h>
+#include <strings.h>
+#include <sys/socket.h>
 
 #include "wiringSerial.h"
+#include "wiringPi.h"
 
 
 int serialOpen (const char *device, const int baud)
@@ -127,16 +131,40 @@ int serialGetchar (const int fd)
 }
 void serialGetstring( char *p, const int fd ) //created by Nithin. Aims to read String At a time
 {
-  //ssize_t a;
-  uint8_t y ;
+//  ssize_t a;
+  uint8_t y=0 ;
 
-  for(int i=0;i<=15;i++) {
-    if (read(fd, &y, 1) != 1) {
+ /* for(int i=0;i<=20;i++) {
+   if (read(fd, &y, 1) != 1) {
       break;
     }else{
       p[i]= (char) (((int)y) & 0xFF) ;
+//      delay_time(0.1);
     }
-  }
+  }*/
+
+  int i=0;
+  char ch ;
+
+  do {
+    if (read(fd, &ch, 1) != 1) {
+      break;
+    }else{
+      p[i]=  ch;
+      i++;
+//      delay_time(0.1);
+    }
+  }while(ch !=';');
+
+
+
+
+
+
+
+   read(fd,p, 100);
+//   recv(fd,p,100,1);
+
   /*a=read(fd, p, 15);
   if(a != 15){
     return a;
@@ -146,4 +174,67 @@ void serialGetstring( char *p, const int fd ) //created by Nithin. Aims to read 
   /*for(int i=0;i<=15;i++) {
     p[i]=(char) serialGetchar(fd);
   }*/
+  /*uint8_t y=0 ;
+  char ch ;
+  for(int i=0;i<=20;i++) {
+    if (read(fd, &y, 1) != 1) {
+      //if (read(fd, &ch, 1) != 1) {
+      break;
+    }else{
+      p[i]= (char) (((int)y) & 0xFF) ;
+//      p[i]=  (ch)  ;
+//      delay_time(0.1);
+    }
+  }*/
+}
+ void delay_time(float number_of_seconds) //for giving a delay /NP
+
+{
+  // Converting time into milli_seconds
+  int milli_seconds = 1000 * number_of_seconds;
+  // Storing start time
+  clock_t start_time = clock();
+  // looping till required time is not achieved
+  while (clock() < start_time + milli_seconds);
+}
+
+
+// for reading the string
+char gBUF[BUFSIZ];
+
+int readline2(int fd, char* buf){
+
+  static char* resultBuffer = gBUF;
+  int ret, mv;
+  char temp[16];
+  char* t;
+
+  bzero(temp, sizeof(temp));
+
+
+
+  t = strchr(resultBuffer,'\n');
+  if(t != NULL){
+    mv = t-resultBuffer+1;
+    strncpy(temp,resultBuffer, mv);
+    resultBuffer = resultBuffer + mv;
+
+    temp[strlen(temp)] = '\0';
+    strcpy(buf,temp);
+    bzero(temp, sizeof(temp));
+    ret = read(fd,&temp,16);
+    temp[ret]='\0';
+    strcat(resultBuffer,temp);
+
+    return ret;
+  }
+  ret = read(fd,&temp,16);
+  temp[ret]='\0';
+  t = strchr(temp,'\n');
+  mv = t-temp+1;
+  strncpy(buf,temp,mv);
+
+  strcat(resultBuffer,temp+mv);
+  return ret;
+
 }

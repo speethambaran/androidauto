@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
@@ -16,16 +18,22 @@ import com.github.anastr.speedviewlib.components.indicators.Indicator;
 import com.infolitz.mycarspeed.shared.CommunicateWithC;
 
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import kotlin.jvm.functions.Function2;
 
 public class SpeedRpmActivity extends AppCompatActivity {
 
-    Speedometer speedometer,rpmMeter;
+    Speedometer speedometer, rpmMeter;
     //... for uart
     CommunicateWithC communicateWithC = new CommunicateWithC();//for kotlin communication with cpp_code
     boolean stop = false;
+    TextView textView_c;
     //uart communication close
+    //for thread
+    Handler handler = new Handler();
+    //for thread...close...
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +42,8 @@ public class SpeedRpmActivity extends AppCompatActivity {
 
         speedometer = findViewById(R.id.speedometer);
         rpmMeter = findViewById(R.id.imageSpeedometer);
+        textView_c = findViewById(R.id.text_c_1);
+
        /* withRotation = findViewById(R.id.cb_withRotation);
         seekBarTickNumbers = findViewById(R.id.seekBarStartDegree);
         seekBarTickPadding = findViewById(R.id.seekBarTickPadding);
@@ -51,11 +61,17 @@ public class SpeedRpmActivity extends AppCompatActivity {
         speedometer.setTextColor(Color.WHITE); //setting the interior speed color
         speedometer.setWithTremble(false); // deactivated the trembling or the indicator flickering
 
+
         rpmMeter.setIndicator(Indicator.Indicators.HalfLineIndicator);
         rpmMeter.getIndicator().setWidth(speedometer.dpTOpx(5f));
         rpmMeter.setSpeedTextColor(Color.WHITE);
         rpmMeter.setUnitTextColor(Color.WHITE);
         rpmMeter.speedPercentTo(40);
+
+
+        //... for uart......
+        callStringg();
+        //...for uart end
 
 
         speedometer.setOnPrintTickLabel(new Function2<Integer, Float, CharSequence>() {
@@ -71,25 +87,50 @@ public class SpeedRpmActivity extends AppCompatActivity {
         });
     }
 
-    //for uart communication....
-    public class MyThreadToCallC extends Thread {
+    @Override
+    protected void onResume() {
 
-        TextView textView = findViewById(R.id.text_c);
-
-        @Override
-        public void run() {
-            while (!stop) {
-                try {
-//                    Log.e("from java testingg",""+communicateWithC.useWiringLib());
-                    String s=communicateWithC.useWiringLib();
-                    textView.setText("" + s);
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                // poll the USB and dispatch changes to the views with a Handler
-            }
-        }
+        super.onResume();
+        stop = false;
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stop = true;
+    }
+
+    @Override
+    protected void onPause() {
+
+        super.onPause();
+        stop = true;
+
+    }
+
+
+    //for uart communication....
+    private void callStringg() {
+        final Runnable r = new Runnable() {
+            String s;
+
+            public void run() {
+//                textView_c.setText("0" + textView_c.getText().toString());
+                s = communicateWithC.useWiringLib();
+                Log.e("from java testingg", "" + s);
+//                textView_c.setText("" + s);
+                handler.postDelayed(this, 5000);
+            }
+        };
+
+        handler.postDelayed(r, 5000);
+    }
+
+
+    //////////////////////new
+
+    /////////////////////new close
     //for uart communication....end...
+
+
 }

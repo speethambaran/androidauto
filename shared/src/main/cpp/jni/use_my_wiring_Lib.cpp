@@ -13,7 +13,8 @@ Java_com_infolitz_mycarspeed_shared_CommunicateWithC_useWiringLib(JNIEnv *env, j
     std::string hello = "Hello from C";
 
     int serial_port;
-    char my_string[20]="";
+    int charCount;
+    char my_string[256]="";
     jstring result;
 
     __android_log_print(ANDROID_LOG_ERROR, "at", "%s", "serial_port");
@@ -47,6 +48,9 @@ Java_com_infolitz_mycarspeed_shared_CommunicateWithC_useWiringLib(JNIEnv *env, j
                 return result;
             }else {*/
                 serialGetstring( my_string,serial_port);
+
+//                charCount = readline2( serial_port,my_string);
+//                __android_log_print(ANDROID_LOG_ERROR, "char count::", "%d", charCount);
                 printf("%s \n", my_string);
                 fflush(stdout);
                 __android_log_print(ANDROID_LOG_ERROR, "string isssss ::", "%s", my_string);
