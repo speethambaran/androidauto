@@ -13,8 +13,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+
 import com.google.android.material.snackbar.Snackbar;
 import com.infolitz.musicplayer.shared.R;
+import com.infolitz.musicplayer.shared.bluetooth.BluetoothDataHandler;
 import com.infolitz.musicplayer.shared.cloud.BaseListener;
 
 public class BaseFragments extends Fragment implements BaseListener {
@@ -24,7 +26,7 @@ public class BaseFragments extends Fragment implements BaseListener {
     public View view;
     private AlertDialog.Builder builder;
     public long mLastClickTime = 0;
-
+    public static BluetoothDataHandler bluetoothDataHandler;
 
     @Override
     public void onCompleted() {

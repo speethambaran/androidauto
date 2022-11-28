@@ -5,6 +5,7 @@ import static com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCU
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -40,8 +42,12 @@ import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.infolitz.musicplayer.shared.databinding.FragmentBluetoothBinding;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 public class BluetoothFragment extends BaseFragments {
@@ -50,16 +56,19 @@ public class BluetoothFragment extends BaseFragments {
     private ArrayAdapter<String> mBTArrayAdapter;
     private String mBluetoothDeviceAddress;
 
+    private BluetoothSocket mBTSocket = null; // bi-directional client-to-client data path
+
 
     // #defines for identifying shared types between calling functions
     private final static int REQUEST_ENABLE_BT = 1; // used to identify adding bluetooth names
     private final static int REQUEST_LOCATION = 4;
+    private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); // "random" unique identifier
+    private ConnectedThread mConnectedThread; // bluetooth background worker thread to send and receive data
 
     private boolean permissionOk = false;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentBluetoothBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -81,8 +90,11 @@ public class BluetoothFragment extends BaseFragments {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         setPermissions();
         turnOnBluetooth();
+
         mBTArrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1);
         binding.deviceList.setAdapter(mBTArrayAdapter); // assign model to view
+
+
         binding.deviceList.setOnItemClickListener(mDeviceClickListener);
 
         binding.btnGet.setOnClickListener(view -> {
@@ -139,6 +151,7 @@ public class BluetoothFragment extends BaseFragments {
                     bluetoothAdapter.startDiscovery();
                     Toast.makeText(getActivity(), "Discovery started", Toast.LENGTH_SHORT).show();
                     getActivity().registerReceiver(blReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
+
                 } else {
                     Toast.makeText(getActivity(), "Bluetooth not on", Toast.LENGTH_SHORT).show();
                 }
@@ -155,11 +168,24 @@ public class BluetoothFragment extends BaseFragments {
             String action = intent.getAction();
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+/*                AudioTrack track = new AudioTrack(AudioManager.STREAM_MUSIC, 22050, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_8BIT, 10000, AudioTrack.MODE_STREAM);
+                Log.d("TRACK", " Track audio attribute :  " + track.getAudioAttributes());*/
 
+/*                byte[] buffer = new byte[1024];
+                int bytes;
+                bytes = socket.getInputStream().read(buffer);
+                track.write(buffer, 0,bytes);*/
                 // add the name to the list
                 if (permissionOk) {
-                    mBTArrayAdapter.add(device.getName() + "\n" + device.getAddress());
+//                    Set<BluetoothDevice> devices = bluetoothAdapter.getBondedDevices();
+//                    for (BluetoothDevice device1 : devices) {
+//                        mBTArrayAdapter.add(device1.getName() + "\n" + device1.getAddress());
+//                        mBTArrayAdapter.notifyDataSetChanged();
+//
+                    mBTArrayAdapter.add(device.getName());
                     mBTArrayAdapter.notifyDataSetChanged();
+
+
                 } else {
                     Toast.makeText(context, "Please allow bluetooth", Toast.LENGTH_SHORT).show();
                     setPermissions();
@@ -168,13 +194,12 @@ public class BluetoothFragment extends BaseFragments {
         }
     };
 
+
     private void setPermissions() {
 
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}
-                    , REQUEST_LOCATION);
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
         } else {
 
             if (bluetoothAdapter == null) {
@@ -206,10 +231,38 @@ public class BluetoothFragment extends BaseFragments {
             final String name = info.substring(0, info.length() - 17);
             BluetoothDevice device = bluetoothAdapter.getRemoteDevice(address);
 
-            if (device == null) {
-                Log.w(TAG, "Device not found.  Unable to connect.");
-                return;
-            }
+                new Thread(() -> {
+                    boolean fail = false;
+
+                    try {
+                        mBTSocket = createBluetoothSocket(device);
+                    } catch (IOException e) {
+                        fail = true;
+                        Toast.makeText(getActivity(), "Socket creation failed", Toast.LENGTH_SHORT).show();
+                    }
+
+                    // Establish the Bluetooth socket connection.
+                    try {
+                        mBTSocket.connect();
+                    } catch (IOException e) {
+                        try {
+                            fail = true;
+                            mBTSocket.close();
+
+                        } catch (IOException e2) {
+                            //insert code to deal with this
+                            Toast.makeText(getActivity(), "Socket creation failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    if (fail == false) {
+                        mConnectedThread = new ConnectedThread(mBTSocket);
+                        mConnectedThread.start();
+                    }
+                }).start();
+
+
+//                initBluetoothAndCallbacks(device, BluetoothConnectionActivity.this);
+
             Log.d(TAG, "Trying to create a new connection.");
             mBluetoothDeviceAddress = address;
             Log.d(TAG, "Connecting");
@@ -217,6 +270,90 @@ public class BluetoothFragment extends BaseFragments {
         }
     };
 
+    private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
+        return device.createRfcommSocketToServiceRecord(BTMODULEUUID);
+        //creates secure outgoing connection with BT device using UUID
+    }
+
+    private class ConnectedThread extends Thread {
+        private final BluetoothSocket mmSocket;
+        private final InputStream mmInStream;
+        private final OutputStream mmOutStream;
+
+        public ConnectedThread(BluetoothSocket socket) {
+            mmSocket = socket;
+            InputStream tmpIn = null;
+            OutputStream tmpOut = null;
+
+            // Get the input and output streams, using temp objects because
+            // member streams are final
+
+            try {
+                tmpIn = socket.getInputStream();
+                tmpOut = socket.getOutputStream();
+            } catch (IOException e) {
+            }
+
+            mmInStream = tmpIn;
+            mmOutStream = tmpOut;
+        }
+
+        public void run() {
+            byte[] buffer = new byte[1024];  // buffer store for the stream
+            int bytes; // bytes returned from read()
+            // Keep listening to the InputStream until an exception occurs
+            while (true) {
+                try {
+                    // Read from the InputStream
+                    bytes = mmInStream.available();
+                    if (bytes != 0) {
+                        SystemClock.sleep(100); //pause and wait for rest of data. Adjust this depending on your sending speed.
+                        bytes = mmInStream.available(); // how many bytes are ready to be read?
+                        bytes = mmInStream.read(buffer, 0, bytes); // record how many bytes we actually read
+
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+
+                    break;
+                }
+            }
+        }
+
+
+
+        /* Call this from the main activity to send data to the remote device */
+      /*  public void write(String inputssid, String inputpass, String currenttime, String data) {
+
+
+            byte[] bytes = new byte[1024];
+            int bufferPosition = 0;
+            String seperate = ",";
+
+            String[] myFields = new String[]{inputssid, seperate, inputpass, seperate, currenttime, seperate, data};
+
+            for (String field : myFields) {
+                byte[] stringBytes = field.getBytes();  // get bytes from string
+                System.arraycopy(stringBytes, 0, bytes, bufferPosition, stringBytes.length);  // copy src to dest
+                bufferPosition += stringBytes.length;  // advance index
+
+            }
+
+            try {
+                mmOutStream.write(bytes);
+            } catch (IOException e) {
+            }
+        }*/
+
+
+        /* Call this from the main activity to shutdown the connection */
+        public void cancel() {
+            try {
+                mmSocket.close();
+            } catch (IOException e) {
+            }
+        }
+    }
 
     private void turnOnBluetooth() {
         if (bluetoothAdapter.isEnabled()) {
@@ -246,8 +383,7 @@ public class BluetoothFragment extends BaseFragments {
         }
 
         if (permissionsList.size() > 0) {
-            ActivityCompat.requestPermissions(getActivity(), permissionsList.toArray(new String[permissionsList.size()]),
-                    1);
+            ActivityCompat.requestPermissions(getActivity(), permissionsList.toArray(new String[permissionsList.size()]), 1);
         }
 
         turnOnLocation();
@@ -272,8 +408,7 @@ public class BluetoothFragment extends BaseFragments {
 
 
         if (permissionsList.size() > 0) {
-            ActivityCompat.requestPermissions(getActivity(), permissionsList.toArray(new String[permissionsList.size()]),
-                    1);
+            ActivityCompat.requestPermissions(getActivity(), permissionsList.toArray(new String[permissionsList.size()]), 1);
         }
 
         turnOnLocation();
@@ -283,14 +418,10 @@ public class BluetoothFragment extends BaseFragments {
 
     private void displayLocationSettingsRequest(Context context) {
         final int REQUEST_CHECK_SETTINGS = 0x1;
-        GoogleApiClient googleApiClient = new GoogleApiClient.Builder(context)
-                .addApi(LocationServices.API).build();
+        GoogleApiClient googleApiClient = new GoogleApiClient.Builder(context).addApi(LocationServices.API).build();
         googleApiClient.connect();
 
-        LocationRequest locationRequest = LocationRequest.create()
-                .setPriority(PRIORITY_HIGH_ACCURACY)
-                .setInterval(10000)
-                .setFastestInterval(10000 / 2);
+        LocationRequest locationRequest = LocationRequest.create().setPriority(PRIORITY_HIGH_ACCURACY).setInterval(10000).setFastestInterval(10000 / 2);
 
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
         builder.setAlwaysShow(true);
@@ -353,6 +484,19 @@ public class BluetoothFragment extends BaseFragments {
                 displayLocationSettingsRequest(getActivity().getApplicationContext());
             }
         }
+    }
+
+    private Boolean PhoneStatePermission() {
+        List<String> permissionsList = new ArrayList<>();
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            permissionsList.add(Manifest.permission.READ_PHONE_STATE);
+        }
+
+        if (permissionsList.size() > 0) {
+            ActivityCompat.requestPermissions(getActivity(), permissionsList.toArray(new String[permissionsList.size()]), 1);
+        }
+
+        return true;
     }
 
 }

@@ -84,27 +84,42 @@ public class ReadUsbFragment extends Fragment implements Runnable {
 
         usbManager();
 
-//        SerialPort serialPort = new SerialPort("/dev/bus/usb/001/005");
-//
-//            serialPort.openPort();//Open serial port
-//            serialPort.setParams(4800, 8, 1, 0);//Set params.
-//            while(true) {
-//                byte[] buffer = serialPort.readBytes(10);
-//                if(buffer!=null) {
-//                    for(byte b:buffer) {
-//                        Log.d("CD", "Serail port   " + b);
-//                    }
-//                }
-//            }
 
+        /*SerialData();*/
 
     }
+
+
+   /* private void SerialData() {
+
+        SerialPort serialPort = new SerialPort("/dev/bus/usb/001/005");
+        try {
+            serialPort.openPort();//Open serial port
+            serialPort.setParams(9600, 8, 1, 0);//Set params.
+            while (true) {
+                byte[] buffer = serialPort.readBytes(10);
+                if (buffer != null) {
+                    for (byte b : buffer) {
+                        Log.d("CD", "Serail port   " + b);
+                    }
+                }
+            }
+        } catch (SerialPortException e) {
+            Log.d("CD", " exception port   " + e);
+            e.printStackTrace();
+        }
+
+
+    }*/
+
 
     private void usbManager() {
 
         if (usbManager != null) {
             HashMap<String, UsbDevice> hostDevice = usbManager.getDeviceList();
             UsbDevice device = null;
+
+
             if (hostDevice != null) {
                 Iterator<UsbDevice> deviceIterator = hostDevice.values().iterator();
                 while (deviceIterator.hasNext()) {
@@ -130,6 +145,8 @@ public class ReadUsbFragment extends Fragment implements Runnable {
                 Log.d("CD", "Host EMPTY");
                 Toast.makeText(getActivity(), "No device found", Toast.LENGTH_SHORT).show();
             }
+        } else {
+            Toast.makeText(getActivity(), "No device found", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -146,6 +163,8 @@ public class ReadUsbFragment extends Fragment implements Runnable {
                         //call method to set up accessory communication
                         Log.d("CD", "permission Accepted for device " + usbDevice.getManufacturerName());
                         connectUSB(usbDevice);
+                    } else {
+                        Toast.makeText(getActivity(), "No Device Found", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -156,8 +175,7 @@ public class ReadUsbFragment extends Fragment implements Runnable {
 
     private void connectUSB(UsbDevice device) {
 
-        Log.d("CD", "Connect USb  : " + device.getManufacturerName());
-
+        Log.d("CD", "Connected USb  : " + device.getManufacturerName() + " v ID " + device.getVendorId() + "  p ID " + device.getProductId());
         UsbInterface intf = null;
 
 

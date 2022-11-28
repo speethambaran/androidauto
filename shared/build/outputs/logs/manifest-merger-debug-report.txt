@@ -1,8 +1,8 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:1:1-89:12
-INJECTED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:1:1-89:12
-INJECTED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:1:1-89:12
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:1:1-90:12
+INJECTED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:1:1-90:12
+INJECTED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:1:1-90:12
 	package
 		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:3:5-46
 		INJECTED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml
@@ -27,168 +27,176 @@ uses-permission#android.permission.READ_EXTERNAL_STORAGE
 ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:9:5-80
 	android:name
 		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:9:22-77
+uses-permission#android.permission.READ_PRIVILEGED_PHONE_STATE
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:10:5-86
+	android:name
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:10:22-83
 uses-permission#android.permission.RECORD_AUDIO
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:10:5-71
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:11:5-71
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:10:22-68
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:11:22-68
 uses-permission#android.permission.USB_PERMISSION
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:11:5-73
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:12:5-73
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:11:22-70
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:12:22-70
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:13:5-75
+	android:name
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:13:22-72
 uses-feature#android.hardware.usb.host.accessory
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:14:5-72
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:15:5-72
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:14:19-69
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:15:19-69
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:16:5-18:40
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:17:5-19:40
 	tools:ignore
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:18:9-37
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:19:9-37
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:17:9-65
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:18:9-65
 uses-feature#android.hardware.bluetooth
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:20:5-63
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:21:5-63
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:20:19-60
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:21:19-60
 uses-permission#android.permission.BLUETOOTH_CONNECT
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:22:5-76
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:23:5-76
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:22:22-73
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:23:22-73
 uses-permission#android.permission.BLUETOOTH_SCAN
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:23:5-73
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:24:5-73
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:23:22-70
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:24:22-70
 uses-permission#android.permission.BLUETOOTH_ADVERTISE
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:24:5-78
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:25:5-78
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:24:22-75
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:25:22-75
 uses-permission#android.permission.BLUETOOTH
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:25:5-27:38
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:26:5-28:38
 	android:maxSdkVersion
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:27:9-35
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:28:9-35
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:26:9-52
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:27:9-52
 uses-permission#android.permission.BLUETOOTH_ADMIN
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:28:5-30:38
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:29:5-31:38
 	android:maxSdkVersion
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:30:9-35
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:31:9-35
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:29:9-58
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:30:9-58
 uses-permission#android.permission.ACCESS_FINE_LOCATION
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:32:5-79
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:33:5-79
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:32:22-76
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:33:22-76
 uses-permission#android.permission.ACCESS_COARSE_LOCATION
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:33:5-81
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:34:5-81
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:33:22-78
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:34:22-78
 uses-permission#android.permission.WAKE_LOCK
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:34:5-68
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:35:5-68
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:34:22-65
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:35:22-65
 uses-permission#android.permission.LOCATION_HARDWARE
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:35:5-37:47
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:36:5-38:47
 	tools:ignore
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:37:9-44
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:38:9-44
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:36:9-60
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:37:9-60
 uses-permission#android.permission.ACCESS_BACKGROUND_LOCATION
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:38:5-85
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:39:5-85
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:38:22-82
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:39:22-82
 uses-permission#android.permission.CONTROL_LOCATION_UPDATES
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:39:5-41:47
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:40:5-42:47
 	tools:ignore
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:41:9-44
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:42:9-44
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:40:9-67
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:41:9-67
 uses-permission#android.permission.BLUETOOTH_PRIVILEGED
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:42:5-44:47
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:43:5-45:47
 	tools:ignore
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:44:9-44
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:45:9-44
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:43:9-63
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:44:9-63
 permission#android.permission.BLUETOOTH
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:46:5-48:37
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:47:5-49:37
 	android:label
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:48:9-34
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:49:9-34
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:47:9-52
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:48:9-52
 permission#android.permission.BLUETOOTH_ADMIN
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:49:5-69
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:50:5-69
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:49:17-66
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:50:17-66
 permission#android.permission.ACCESS_FINE_LOCATION
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:50:5-74
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:51:5-74
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:50:17-71
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:51:17-71
 permission#android.permission.ACCESS_COARSE_LOCATION
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:51:5-76
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:52:5-76
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:51:17-73
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:52:17-73
 permission#android.permission.READ_EXTERNAL_STORAGE
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:52:5-75
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:53:5-75
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:52:17-72
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:53:17-72
 permission#android.permission.USB_PERMISSION
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:53:5-68
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:54:5-68
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:53:17-65
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:54:17-65
 application
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:56:5-87:19
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:57:5-88:19
 	android:appCategory
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:56:18-45
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:57:18-45
 uses-library#com.android.future.usb.accessory
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:57:9-73
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:58:9-73
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:57:23-70
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:58:23-70
 activity#com.infolitz.musicplayer.shared.ui.Activity.MainActivity
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:58:9-73:20
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:59:9-74:20
 	android:exported
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:60:13-36
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:61:13-36
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:59:13-53
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:60:13-53
 meta-data#com.google.android.gms.car.application
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:61:13-63:63
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:62:13-64:63
 	android:resource
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:63:17-60
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:64:17-60
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:62:17-70
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:63:17-70
 meta-data#android.hardware.usb.action.USB_DEVICE_ATTACHED
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:64:13-66:60
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:65:13-67:60
 	android:resource
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:66:17-57
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:67:17-57
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:65:17-79
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:66:17-79
 intent-filter#action:name:android.hardware.usb.action.+action:name:android.hardware.usb.action.USB_DEVICE_ATTACHED+action:name:android.media.browse.MediaBrowserService
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:68:13-72:29
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:69:13-73:29
 action#android.media.browse.MediaBrowserService
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:69:17-83
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:70:17-83
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:69:25-80
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:70:25-80
 action#android.hardware.usb.action.USB_DEVICE_ATTACHED
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:70:17-90
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:71:17-90
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:70:25-87
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:71:25-87
 action#android.hardware.usb.action.
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:71:17-71
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:72:17-71
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:71:25-68
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:72:25-68
 service#com.infolitz.musicplayer.shared.MyMusicService
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:76:9-84:19
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:77:9-85:19
 	android:exported
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:78:13-36
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:79:13-36
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:77:13-74
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:78:13-74
 intent-filter#action:name:android.hardware.usb.action.+action:name:android.hardware.usb.action.USB_ACCESSORY_ATTACHED+action:name:android.media.browse.MediaBrowserService
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:79:13-83:29
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:80:13-84:29
 action#android.hardware.usb.action.USB_ACCESSORY_ATTACHED
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:81:17-93
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:82:17-93
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:81:25-90
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:82:25-90
 receiver#com.infolitz.musicplayer.shared.ui.MyNotificationPublisher
-ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:86:9-64
+ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:87:9-64
 	android:name
-		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:86:19-61
+		ADDED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml:87:19-61
 uses-sdk
 INJECTED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\Music Auto_ fully automotive\Music Auto\shared\src\main\AndroidManifest.xml
