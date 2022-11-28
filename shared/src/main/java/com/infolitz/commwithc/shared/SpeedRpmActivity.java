@@ -13,6 +13,9 @@ import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.chaquo.python.PyObject;
+import com.chaquo.python.Python;
+import com.chaquo.python.android.AndroidPlatform;
 import com.github.anastr.speedviewlib.Speedometer;
 import com.github.anastr.speedviewlib.components.indicators.Indicator;
 import com.infolitz.mycarspeed.shared.CommunicateWithC;
@@ -33,6 +36,7 @@ public class SpeedRpmActivity extends AppCompatActivity {
     //uart communication close
     //for thread
     Handler handler = new Handler();
+    String dataReturned;
     //for thread...close...
 
     @Override
@@ -70,8 +74,20 @@ public class SpeedRpmActivity extends AppCompatActivity {
 
 
         //... for uart......
-        callStringg();
+//        callStringg();//call uart
         //...for uart end
+        //for python
+        if (! Python.isStarted()) {
+            Python.start(new AndroidPlatform(this));
+            Log.e("in python"," success");
+        }
+
+        /*Python py = Python.getInstance();
+        PyObject module = py.getModule("uart1");*/
+        dataReturned=communicateWithC.pyKot();
+        textView_c.setText("" + dataReturned);
+
+        //for python...close
 
 
         speedometer.setOnPrintTickLabel(new Function2<Integer, Float, CharSequence>() {

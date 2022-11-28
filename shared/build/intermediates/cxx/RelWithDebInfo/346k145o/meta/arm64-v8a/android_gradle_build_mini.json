@@ -1,0 +1,47 @@
+{
+  "buildFiles": [
+    "D:\\Android Infolitz_ NP\\Android Automotive Required files\\Projects\\Commwithc\\shared\\src\\main\\cpp\\CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "C:\\Users\\sajil\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+      "-C",
+      "D:\\Android Infolitz_ NP\\Android Automotive Required files\\Projects\\Commwithc\\shared\\.cxx\\RelWithDebInfo\\346k145o\\arm64-v8a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "C:\\Users\\sajil\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+    "-C",
+    "D:\\Android Infolitz_ NP\\Android Automotive Required files\\Projects\\Commwithc\\shared\\.cxx\\RelWithDebInfo\\346k145o\\arm64-v8a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "wiringSerial::@6890427a1f51a3e7e1df": {
+      "artifactName": "wiringSerial",
+      "abi": "arm64-v8a",
+      "output": "D:\\Android Infolitz_ NP\\Android Automotive Required files\\Projects\\Commwithc\\shared\\build\\intermediates\\cxx\\RelWithDebInfo\\346k145o\\obj\\arm64-v8a\\libwiringSerial.so",
+      "runtimeFiles": []
+    },
+    "myTestConnLib::@6890427a1f51a3e7e1df": {
+      "artifactName": "myTestConnLib",
+      "abi": "arm64-v8a",
+      "output": "D:\\Android Infolitz_ NP\\Android Automotive Required files\\Projects\\Commwithc\\shared\\build\\intermediates\\cxx\\RelWithDebInfo\\346k145o\\obj\\arm64-v8a\\libmyTestConnLib.so",
+      "runtimeFiles": []
+    },
+    "srkMyLib::@6890427a1f51a3e7e1df": {
+      "artifactName": "srkMyLib",
+      "abi": "arm64-v8a",
+      "output": "D:\\Android Infolitz_ NP\\Android Automotive Required files\\Projects\\Commwithc\\shared\\build\\intermediates\\cxx\\RelWithDebInfo\\346k145o\\obj\\arm64-v8a\\libsrkMyLib.so",
+      "runtimeFiles": [
+        "C:\\Users\\sajil\\AppData\\Local\\Android\\Sdk\\ndk\\21.4.7075529\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\aarch64-linux-android\\23\\liblog.so"
+      ]
+    },
+    "wiringPi::@6890427a1f51a3e7e1df": {
+      "artifactName": "wiringPi",
+      "abi": "arm64-v8a",
+      "output": "D:\\Android Infolitz_ NP\\Android Automotive Required files\\Projects\\Commwithc\\shared\\build\\intermediates\\cxx\\RelWithDebInfo\\346k145o\\obj\\arm64-v8a\\libwiringPi.so",
+      "runtimeFiles": []
+    }
+  }
+}

@@ -162,7 +162,7 @@ void serialGetstring( char *p, const int fd ) //created by Nithin. Aims to read 
 
 
 
-   read(fd,p, 100);
+//   read(fd,p, 100);
 //   recv(fd,p,100,1);
 
   /*a=read(fd, p, 15);
