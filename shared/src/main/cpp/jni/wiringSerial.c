@@ -73,22 +73,22 @@ int serialOpen (const char *device, const int baud)
 
 // Get and modify current options:
 
-  tcgetattr (fd, &options) ;
+  tcgetattr (fd, &options) ;  // Get the current attributes of the Serial port
 
     cfmakeraw   (&options) ;
-    cfsetispeed (&options, myBaud) ;
-    cfsetospeed (&options, myBaud) ;
+    cfsetispeed (&options, myBaud) ; // Set Read  Speed as 9600
+    cfsetospeed (&options, myBaud) ; // Set Write Speed as 9600
 
-    options.c_cflag |= (CLOCAL | CREAD) ;
-    options.c_cflag &= ~PARENB ;
-    options.c_cflag &= ~CSTOPB ;
-    options.c_cflag &= ~CSIZE ;
-    options.c_cflag |= CS8 ;
+    options.c_cflag |= (CLOCAL | CREAD) ;  // Enable receiver,Ignore Modem Control lines
+    options.c_cflag &= ~PARENB ; // Disables the Parity Enable bit(PARENB),So No Parity
+    options.c_cflag &= ~CSTOPB ; // CSTOPB = 2 Stop bits
+    options.c_cflag &= ~CSIZE ;   // Clears the mask for setting the data size
+    options.c_cflag |= CS8 ;    // Set the data bits = 8
     options.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG) ;
-    options.c_oflag &= ~OPOST ;
+    options.c_oflag &= ~OPOST ; // No Output Processing
 
-    options.c_cc [VMIN]  =   0 ;
-    options.c_cc [VTIME] = 100 ;	// Ten seconds (100 deciseconds)
+    options.c_cc [VMIN]  =   19 ; // added for testing // added 1 sec
+    options.c_cc [VTIME] = 100 ; // added for testing // added	// Ten seconds (100 deciseconds)
 
   tcsetattr (fd, TCSANOW, &options) ;
 
@@ -154,7 +154,8 @@ void serialGetstring( char *p, const int fd ) //created by Nithin. Aims to read 
       i++;
 //      delay_time(0.1);
     }
-  }while(ch !=';');
+  }while(i <2);
+//  }while(ch !=';');
 
 
 
@@ -237,4 +238,209 @@ int readline2(int fd, char* buf){
   strcat(resultBuffer,temp+mv);
   return ret;
 
+}
+
+//editted codes below
+int serialOpen1 (const char *device, const int baud)
+{
+  struct termios options ;
+  speed_t myBaud ;
+  int     status, fd ;
+//  __android_log_print(ANDROID_LOG_ERROR, "at", "%s", "serialOpen");
+
+  switch (baud)
+  {
+    case      50:	myBaud =      B50 ; break ;
+    case      75:	myBaud =      B75 ; break ;
+    case     110:	myBaud =     B110 ; break ;
+    case     134:	myBaud =     B134 ; break ;
+    case     150:	myBaud =     B150 ; break ;
+    case     200:	myBaud =     B200 ; break ;
+    case     300:	myBaud =     B300 ; break ;
+    case     600:	myBaud =     B600 ; break ;
+    case    1200:	myBaud =    B1200 ; break ;
+    case    1800:	myBaud =    B1800 ; break ;
+    case    2400:	myBaud =    B2400 ; break ;
+    case    4800:	myBaud =    B4800 ; break ;
+    case    9600:	myBaud =    B9600 ; break ;
+    case   19200:	myBaud =   B19200 ; break ;
+    case   38400:	myBaud =   B38400 ; break ;
+    case   57600:	myBaud =   B57600 ; break ;
+    case  115200:	myBaud =  B115200 ; break ;
+    case  230400:	myBaud =  B230400 ; break ;
+    case  460800:	myBaud =  B460800 ; break ;
+    case  500000:	myBaud =  B500000 ; break ;
+    case  576000:	myBaud =  B576000 ; break ;
+    case  921600:	myBaud =  B921600 ; break ;
+    case 1000000:	myBaud = B1000000 ; break ;
+    case 1152000:	myBaud = B1152000 ; break ;
+    case 1500000:	myBaud = B1500000 ; break ;
+    case 2000000:	myBaud = B2000000 ; break ;
+    case 2500000:	myBaud = B2500000 ; break ;
+    case 3000000:	myBaud = B3000000 ; break ;
+    case 3500000:	myBaud = B3500000 ; break ;
+    case 4000000:	myBaud = B4000000 ; break ;
+
+    default:
+      return -2 ;
+  }
+//  __android_log_print(ANDROID_LOG_ERROR, "at", "%s", "after switch");
+
+  if ((fd = open (device, O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK)) == -1)
+//  if ((fd = open (device, O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK)) == -1)
+    return -1 ;
+
+
+  fcntl (fd, F_SETFL, O_RDWR) ;
+
+// Get and modify current options:
+
+  tcgetattr (fd, &options) ;  // Get the current attributes of the Serial port
+
+  cfmakeraw   (&options) ;
+  cfsetispeed (&options, myBaud) ; // Set Read  Speed as 9600
+  cfsetospeed (&options, myBaud) ; // Set Write Speed as 9600
+
+  //added by nith
+  options.c_cflag &= ~PARENB;   // Disables the Parity Enable bit(PARENB),So No Parity
+  options.c_cflag &= ~PARODD; // added
+
+  if (0 > tcgetattr(fd, &options))
+  {
+    return 4;/* log and handle error */
+  }
+
+  options.c_cflag |= CSTOPB;   // CSTOPB = 2 Stop bits
+  options.c_cflag &= ~CSIZE;    // Clears the mask for setting the data size
+  options.c_cflag |=  CS8;      // Set the data bits = 8
+
+
+  options.c_cflag &= ~CRTSCTS;       // No Hardware flow Control
+  options.c_cflag |= (CREAD | CLOCAL); // Enable receiver,Ignore Modem Control lines
+
+  options.c_lflag =0; /* RAW input */ // added
+
+  options.c_iflag &= ~(IXON | IXOFF | IXANY);          // Disable XON/XOFF flow control both i/p and o/p
+  options.c_iflag &= ~(ICANON | ECHO | ECHOE | ISIG);  // Non Cannonical mode
+
+  options.c_cc[VMIN]  = 19; //// Wait for at least 1 character before returning
+  options.c_cc[VTIME] = 100; //// Wait 200 milliseconds between bytes before returning from read
+
+  options.c_iflag = 0;            /* SW flow control off, no parity checks etc */ // added
+
+  options.c_oflag &= ~OPOST;// No Output Processing
+  options.c_oflag = 0;
+
+  if((tcsetattr(fd,TCSANOW,&options)) != 0) // Set the attributes to the termios structure
+    printf("\n  ERROR ! in Setting attributes");
+  else
+    printf("\n  BaudRate = 9600 \n  StopBits = 2 \n  Parity   = None\n");
+  //------------------------------- Read data from serial port -----------------------------
+
+  //tcflush(fd, TCIFLUSH);  //  Discards old data in the rx buffer
+
+  // add ended....nith
+
+//  options.c_cflag |= (CLOCAL | CREAD) ;  // Enable receiver,Ignore Modem Control lines
+  //options.c_cflag &= ~PARENB ; // Disables the Parity Enable bit(PARENB),So No Parity
+ // options.c_cflag &= ~CSTOPB ; // CSTOPB = 2 Stop bits
+ // options.c_cflag &= ~CSIZE ;   // Clears the mask for setting the data size
+ // options.c_cflag |= CS8 ;    // Set the data bits = 8
+ // options.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG) ;
+ // options.c_oflag &= ~OPOST ; // No Output Processing
+
+//  options.c_cc [VMIN]  =   0 ; // added for testing // added 1 sec
+//  options.c_cc [VTIME] = 100 ; // added for testing // added	// Ten seconds (100 deciseconds)
+
+ /* tcsetattr (fd, TCSANOW, &options) ;
+
+  ioctl (fd, TIOCMGET, &status);
+
+  status |= TIOCM_DTR ;
+  status |= TIOCM_RTS ;
+
+  ioctl (fd, TIOCMSET, &status);
+
+  usleep (10000) ;*/	// 10mS
+
+  return fd ;
+}
+
+void serialGetstring1( char *p, const int fd,uint8_t *rebitSiz ) //created by Nithin. Aims to read String At a time
+{
+
+  *rebitSiz = read (fd, p, 32);
+  /*int i=0;
+  char ch ;
+
+  do {
+    if (read(fd, &ch, 1) != 1) {
+      break;
+    }else{
+      p[i]=  ch;
+      *rebitSiz=*rebitSiz+1;
+      i++;
+//      delay_time(0.1);
+    }
+  }while(i <16);*/
+//  *rebitSiz=20;
+  //tcflush(fd, TCIFLUSH);
+  close(fd);// Close the serial port
+}
+
+int serialReadData (const char *device, const int baud,char *p)
+{
+  struct termios options ;
+  speed_t myBaud=B9600 ;
+  int fd ;
+
+  if ((fd = open (device, O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK)) == -1)
+    return -1 ;
+
+
+  fcntl (fd, F_SETFL, O_RDWR) ;
+
+// Get and modify current options:
+
+  tcgetattr (fd, &options) ;  // Get the current attributes of the Serial port
+
+  cfmakeraw   (&options) ;
+  cfsetspeed (&options, myBaud) ; // Set Read and write  Speed as 9600
+
+  //added by nith
+  options.c_cflag &= ~PARENB;   // Disables the Parity Enable bit(PARENB),So No Parity
+  options.c_cflag &= ~PARODD; // added
+
+
+
+  options.c_cflag |= CSTOPB;   // CSTOPB = 2 Stop bits
+  options.c_cflag &= ~CSIZE;    // Clears the mask for setting the data size
+  options.c_cflag |=  CS8;      // Set the data bits = 8
+
+
+  options.c_cflag &= ~CRTSCTS;       // No Hardware flow Control
+  options.c_cflag |= (CREAD | CLOCAL); // Enable receiver,Ignore Modem Control lines
+
+  options.c_lflag =0; /* RAW input */ // added
+
+  options.c_iflag &= ~(IXON | IXOFF | IXANY);          // Disable XON/XOFF flow control both i/p and o/p
+  options.c_iflag &= ~(ICANON | ECHO | ECHOE | ISIG);  // Non Cannonical mode
+
+  options.c_cc[VMIN]  = 19; //// Wait for at least 1 character before returning
+  options.c_cc[VTIME] = 100; //// Wait 200 milliseconds between bytes before returning from read
+
+  options.c_iflag = 0;            /* SW flow control off, no parity checks etc */ // added
+
+  options.c_oflag &= ~OPOST;// No Output Processing
+  options.c_oflag = 0;
+
+  if((tcsetattr(fd,TCSANOW,&options)) != 0) // Set the attributes to the termios structure
+    printf("\n  ERROR ! in Setting attributes");
+  else
+    printf("\n  BaudRate = 9600 \n  StopBits = 2 \n  Parity   = None\n");
+  //------------------------------- Read data from serial port -----------------------------
+  read (fd, p, 32);
+  close(fd);// Close the serial port
+
+  return fd ;
 }

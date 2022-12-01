@@ -34,6 +34,7 @@ class CommunicateWithC : AppCompatActivity() {
 
     }
     external fun useWiringLib():String
+    external fun useShortCommLib():String
     companion object {
         init {
             System.loadLibrary("srkMyLib")

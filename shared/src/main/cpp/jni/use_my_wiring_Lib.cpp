@@ -14,6 +14,8 @@ Java_com_infolitz_mycarspeed_shared_CommunicateWithC_useWiringLib(JNIEnv *env, j
 
     int serial_port;
     int charCount;
+    uint8_t rebitSize=0;
+
     char my_string[256]="";
     jstring result;
 
@@ -21,20 +23,21 @@ Java_com_infolitz_mycarspeed_shared_CommunicateWithC_useWiringLib(JNIEnv *env, j
     system("su");
 //    system("chmod 777 /dev/ttyS0");
 //    system("cat /dev/ttyS0");
+//    system("su chmod 777 /dev/ttyS0");
     system("su chmod 777 /dev/ttyS0");
     system("su chmod 777 /dev/gpiomem");
     system("su chmod 777 /dev/mem");
-    if ((serial_port = serialOpen ("/dev/ttyS0", 9600)) < 0)	/* open serial port--"/dev/ttyS0",9600 --("/sys/class/tty/ttyS0", 115200) */
+    if ((serial_port = serialOpen1 ("/dev/ttyS0", 9600)) < 0)	/* open serial port--"/dev/ttyS0",9600 --("/sys/class/tty/ttyS0", 115200) */
     {
         __android_log_print(ANDROID_LOG_ERROR, "Unable to open serial device: ::", "%s", strerror (errno));
         return (env)->NewStringUTF("1");
     }
     __android_log_print(ANDROID_LOG_ERROR, "serial port value: ", "%d", serial_port);
-    if (wiringPiSetup () == -1)					/* initializes wiringPi setup */
+    /*if (wiringPiSetup () == -1)					*//* initializes wiringPi setup *//*
     {
         __android_log_print(ANDROID_LOG_ERROR, "Unable to start wiringPi:\n", "%s", strerror (errno));
         return (env)->NewStringUTF("2");
-    }
+    }*/
 
 
     while(1){
@@ -47,18 +50,44 @@ Java_com_infolitz_mycarspeed_shared_CommunicateWithC_useWiringLib(JNIEnv *env, j
                 result = (env)->NewStringUTF("wrong format");
                 return result;
             }else {*/
-                serialGetstring( my_string,serial_port);
+                serialGetstring1( my_string,serial_port,&rebitSize);
 
 //                charCount = readline2( serial_port,my_string);
 //                __android_log_print(ANDROID_LOG_ERROR, "char count::", "%d", charCount);
                 printf("%s \n", my_string);
                 fflush(stdout);
                 __android_log_print(ANDROID_LOG_ERROR, "string isssss ::", "%s", my_string);
+                __android_log_print(ANDROID_LOG_ERROR, "bit size received isssss ::", "%d", rebitSize);
 
                 result = (env)->NewStringUTF(my_string);
                 return result;
            // }
         }
     }
+
+}
+
+extern "C" JNIEXPORT jstring JNICALL
+Java_com_infolitz_mycarspeed_shared_CommunicateWithC_useShortCommLib(JNIEnv *env, jobject thiz) {
+    int serial_port;
+    uint8_t rebitSize=0;
+
+    char my_string[256]="";
+    jstring result;
+
+    __android_log_print(ANDROID_LOG_ERROR, "at", "%s", "serial_port");
+    system("su");
+    system("su chmod 777 /dev/ttyS0");
+    if ((serial_port = serialReadData ("/dev/ttyS0", 9600,my_string)) < 0)	/* open serial port--"/dev/ttyS0",9600 --("/sys/class/tty/ttyS0", 115200) */
+    {
+        __android_log_print(ANDROID_LOG_ERROR, "Unable to open serial device: ::", "%s", strerror (errno));
+        return (env)->NewStringUTF("1");
+    }
+    fflush(stdout);
+    __android_log_print(ANDROID_LOG_ERROR, "string isssss ::", "%s", my_string);
+    __android_log_print(ANDROID_LOG_ERROR, "bit size received isssss ::", "%d", rebitSize);
+    result = (env)->NewStringUTF(my_string);
+    return result;
+
 
 }
