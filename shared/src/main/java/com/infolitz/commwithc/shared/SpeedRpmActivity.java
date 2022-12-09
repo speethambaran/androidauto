@@ -10,21 +10,14 @@ import android.os.Message;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.chaquo.python.PyObject;
-import com.chaquo.python.Python;
-import com.chaquo.python.android.AndroidPlatform;
 import com.github.anastr.speedviewlib.Speedometer;
 import com.github.anastr.speedviewlib.components.indicators.Indicator;
+import com.infolitz.commwithc.shared.wrapper.PortflagWrapper;
 import com.infolitz.mycarspeed.shared.CommunicateWithC;
 
 import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import kotlin.jvm.functions.Function2;
 
@@ -37,21 +30,8 @@ public class SpeedRpmActivity extends AppCompatActivity {
     TextView textView_c;
     //uart communication close
     //for thread
-    Handler handler = new Handler(){
-
-        @Override
-        public void handleMessage(@NonNull Message msg){
-        super.handleMessage(msg);
-            Bundle bundle=msg.getData();
-            String speed=bundle.getString("speedString");
-            String rpm=bundle.getString("rpmString");
-            Log.e("inside handler",speed.toString());
-
-            textView_c.setText("" + speed);
-            speedometer.speedTo(Float.parseFloat(speed));
-            rpmMeter.speedTo(Float.parseFloat(rpm));
-        }
-    };
+    Handler handler = new Handler();
+    PortflagWrapper portflagWrapper = new PortflagWrapper(/*-1*/);
     //for thread...close...
 
 
@@ -90,6 +70,7 @@ public class SpeedRpmActivity extends AppCompatActivity {
 
 
         //... for uart......
+        portflagWrapper.setPort(-1);
         callStringg();//call uart
         //...for uart end
         //for python
@@ -143,43 +124,59 @@ public class SpeedRpmActivity extends AppCompatActivity {
 
     //for uart communication....
     private void callStringg() {
+        portflagWrapper.setPort(-1);
+        portflagWrapper.setSpeed(0.00F);
+        portflagWrapper.setRpm(0.00F);
+//        communicateWithC.useThreadTestLib(/*portflagWrapper.getPort()*/);
         final Runnable runnable = new Runnable() {
-            Message sMessage =handler.obtainMessage();
-            Bundle bundle=new Bundle();
-            String speed1;
-            Float rpmCount,speedCount;
+            int flagPort = -1;
+            String ourString;// returned string
+            Float rpmCount, speedCount;
 
             public void run() {
 //                textView_c.setText("0" + textView_c.getText().toString());
 //                while (true) {
-                    try {
+                try {
 //                        Thread.sleep(3000);
-//                        speed1 = communicateWithC.useWiringLib();
-                        speed1 = communicateWithC.useShortCommLib();
-                        Log.e("from java testingg", "" + speed1);
-                        speedCount= callValueCalcuSpeed(speed1);
-                        rpmCount= callValueCalcuRpm(speed1);
-                        Log.e("from java speed", "" + speedCount);
-                        Log.e("from java rpm", "" + rpmCount);
-//                        Log.e("from java testingg", "" + speed1 + " rpm = " + rpmCount);
-                        textView_c.setText("speed= " + speedCount +" rpm="+rpmCount);
-                        speedometer.speedTo(speedCount);
-                        rpmMeter.speedTo(rpmCount);
-                        handler.postDelayed(this, 3000);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+//                    communicateWithC.useThreadTestLib(/*portflagWrapper.getPort()*/);
+                    communicateWithC.useShortCommLib(/*portflagWrapper.getPort()*/);
+//                    communicateWithC.useThreadTestLib(/*portflagWrapper.getPort()*/);
+//                    ourString = communicateWithC.useShortCommLib(/*portflagWrapper.getPort()*/);
+                    Thread.sleep(300);
+//                    Log.e("java: port value", "" + portflagWrapper.getPort());
+//                    Log.e("from java: testing our string", "" + ourString);
+//                    speedCount = callValueCalcuSpeed(ourString);
+//                    rpmCount = callValueCalcuRpm(ourString);
+//                    if (portflagWrapper.getPort() == -1) {
+////                        flagPort = callPort(ourString);// extract port number
+//                        Log.e("port value from java: is:", "" + flagPort);
+//                        portflagWrapper.setPort(flagPort);
+//                    }
+                    Log.e("java:now our port value is ", "" + portflagWrapper.getPort());
+//                    Log.e("from java speed", "" + speedCount);
+//                    Log.e("from java rpm", "" + rpmCount);
+//                    textView_c.setText("speed= " + speedCount + " rpm=" + rpmCount);
+                    textView_c.setText("speed= " + portflagWrapper.getSpeed() + " rpm=" + portflagWrapper.getRpm());
+//                    speedometer.speedTo(speedCount);
+                    speedometer.speedTo(portflagWrapper.getSpeed());
+//                    rpmMeter.speedTo(rpmCount);
+                    rpmMeter.speedTo(portflagWrapper.getRpm());
+//                        }
+                    handler.postDelayed(this, 3000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                /* bundle.putString("speedString",speed1);
                 bundle.putString("rpmString",rpmCount.toString());
                 sMessage.setData(bundle);
                 sMessage.sendToTarget();*/
-               // handler.removeMessages(0);
+                // handler.removeMessages(0);
 //                handler.sendMessage(sMessage); //send data to handler
 //                }
             }
         };
 
-         handler.postDelayed(runnable, 5000);
+        handler.postDelayed(runnable, 1000);
        /* Thread rThread =new Thread(runnable);
         rThread.start();*/
     }
@@ -189,29 +186,53 @@ public class SpeedRpmActivity extends AppCompatActivity {
         char[] spd1 = new char[5];
 
 
-        String[] arrOfSpedd = s.split("d = ", 2);
-        speed=arrOfSpedd[1];
-        for (int i=0;i<2;i++)
-            spd1[i]=speed.charAt(i);
+        String[] arrOfSpedd = s.split("d=", 2); //(for input speed = 30 rpm = 40)
+//        String[] arrOfSpedd = s.split("!", 2); //( for input : 30!40?)!35? ; 67
+        speed = arrOfSpedd[1];
+        for (int i = 0; i < 2; i++) {
+            if (Character.isDigit(speed.charAt(i))) {
+                spd1[i] = speed.charAt(i);
+            }
+
+        }
 
         return Float.parseFloat(String.valueOf(spd1));
     }
+
     private Float callValueCalcuRpm(String s) {
         String rpm;
 
         char[] rpmcnt1 = new char[5];
 
 
-        String[] arrOfRpm = s.split("m = ", 2);
-        rpm=arrOfRpm[1];
-        for (int i=0;i<2;i++)
-            rpmcnt1[i]=rpm.charAt(i);
-
+        String[] arrOfRpm = s.split("m=", 2); //(for input speed = 30 rpm = 40)
+//        String[] arrOfRpm = s.split("!", 2); //(30!40?)
+        rpm = arrOfRpm[1];
+        for (int i = 0; i < 2; i++) {
+            if (Character.isDigit(rpm.charAt(i))) {
+                rpmcnt1[i] = rpm.charAt(i);
+            }
+        }
         return Float.parseFloat(String.valueOf(rpmcnt1));
+    }
+
+    private int callPort(String s) {
+        String port;
+
+        char[] rpmcnt1 = new char[5];
+
+
+        String[] arrOfRpm = s.split(" ; ", 2);
+        port = arrOfRpm[1];
+        return Integer.parseInt(port);
     }
 
 
     //////////////////////new
+    public static void callToSetVal(int val) { //to set value
+        PortflagWrapper portflagWrapper = new PortflagWrapper(/*-1*/);
+        portflagWrapper.setPort(val);
+    }
 
     /////////////////////new close
     //for uart communication....end...

@@ -13,7 +13,7 @@ import com.chaquo.python.android.AndroidPlatform
 import com.infolitz.commwithc.shared.R
 
 class CommunicateWithC : AppCompatActivity() {
-    fun pyKot():String {
+    fun pyKot():String { // for python
 
         if (! Python.isStarted()) {
             Python.start(AndroidPlatform(this))
@@ -34,7 +34,9 @@ class CommunicateWithC : AppCompatActivity() {
 
     }
     external fun useWiringLib():String
-    external fun useShortCommLib():String
+    external fun useThreadTestLib():String
+    external fun useShortCommLib(/*flagPort: Int*/):String
+//    external fun useShortCommLib(/*flagPort: Int*/):Void
     companion object {
         init {
             System.loadLibrary("srkMyLib")

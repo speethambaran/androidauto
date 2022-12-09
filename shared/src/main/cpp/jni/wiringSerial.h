@@ -13,6 +13,7 @@ extern void  serialGetstring1 ( char *p, const int fd,uint8_t *rebitSiz ) ;
 void delay_time(float number_of_seconds);
 int readline2(int fd, char* buf);
 int serialReadData (const char *device, const int baud,char *p);
+int serialReadDataPMS (const char *device, const int baud,char *p);
 
 #ifdef __cplusplus
 }

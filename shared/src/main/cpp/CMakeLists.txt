@@ -7,7 +7,6 @@ include_directories(
         jni
 )
 
-
 add_library(
         srkMyLib
         SHARED

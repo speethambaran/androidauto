@@ -14,6 +14,7 @@
 #include <time.h>
 #include <strings.h>
 #include <sys/socket.h>
+#include <bits/threads_inlines.h>
 
 #include "wiringSerial.h"
 #include "wiringPi.h"
@@ -323,8 +324,8 @@ int serialOpen1 (const char *device, const int baud)
   options.c_iflag &= ~(IXON | IXOFF | IXANY);          // Disable XON/XOFF flow control both i/p and o/p
   options.c_iflag &= ~(ICANON | ECHO | ECHOE | ISIG);  // Non Cannonical mode
 
-  options.c_cc[VMIN]  = 19; //// Wait for at least 1 character before returning
-  options.c_cc[VTIME] = 100; //// Wait 200 milliseconds between bytes before returning from read
+  options.c_cc[VMIN]  = 14; //// Wait for at least 1 character before returning
+  options.c_cc[VTIME] = 50; //// Wait 200 milliseconds between bytes before returning from read
 
   options.c_iflag = 0;            /* SW flow control off, no parity checks etc */ // added
 
@@ -385,7 +386,7 @@ void serialGetstring1( char *p, const int fd,uint8_t *rebitSiz ) //created by Ni
   }while(i <16);*/
 //  *rebitSiz=20;
   //tcflush(fd, TCIFLUSH);
-  close(fd);// Close the serial port
+  //close(fd);// Close the serial port
 }
 
 int serialReadData (const char *device, const int baud,char *p)
@@ -440,7 +441,11 @@ int serialReadData (const char *device, const int baud,char *p)
     printf("\n  BaudRate = 9600 \n  StopBits = 2 \n  Parity   = None\n");
   //------------------------------- Read data from serial port -----------------------------
   read (fd, p, 32);
-  close(fd);// Close the serial port
+  //  recv (fd, p, 32,);
+  //close(fd);// Close the serial port
 
   return fd ;
 }
+
+
+// for threadingg...
